@@ -100,7 +100,7 @@ class Facturas_model extends CI_Model {
                 $sql.=" ORDER BY a.fecha DESC, b.proveedor ";
             }
             
-            //echo $sql;
+            $sql=$sql. " limit 100 ";
             
             $retorno=$this->db->query($sql, array($b))->result();
             if((is_array($retorno))){

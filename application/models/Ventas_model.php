@@ -101,7 +101,7 @@ class Ventas_model extends CI_Model {
                 }
             }
              
-            $sql.="  order by a.fecha desc ,a.cliente ,a.puerto,a.numero,a.codigo_comp,a.letra LIMIT 50";
+            $sql.="  order by a.fecha desc ,a.cliente ,a.puerto,a.numero,a.codigo_comp,a.letra LIMIT 100";
             
             $retorno=$this->db->query($sql, array($b,$b))->result();
             if((is_array($retorno))){

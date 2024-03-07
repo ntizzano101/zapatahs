@@ -61,7 +61,7 @@ class Clientes_model extends CI_Model {
                 " WHERE baja IS NULL".
                 " AND ( UPPER(a.cliente) LIKE ?".
                     " OR UPPER(b.razon_soc) LIKE ?".
-                    " OR UPPER(c.etiqueta) LIKE ?)";
+                    " OR UPPER(c.etiqueta) LIKE ?) order by a.rz";
             
             $retorno=$this->db->query($sql, array($b,$b,$b))->result();
             if((is_array($retorno))){
@@ -84,7 +84,7 @@ class Clientes_model extends CI_Model {
                 " LEFT JOIN empresas b ON a.id_empresa=b.id_empresa".
                 " LEFT JOIN etiquetas c ON a.id_etiqueta=c.id".    
                 " INNER JOIN cdiva d ON a.iva=d.codigo".    
-                " WHERE a.id=?";
+                " WHERE a.id=? order by a.rz";
             
             $retorno=$this->db->query($sql, array($id))->row();
             return $retorno;

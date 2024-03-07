@@ -59,7 +59,7 @@ class Proveedores_model extends CI_Model {
                 " WHERE baja IS NULL".
                 " AND ( UPPER(a.proveedor) LIKE ?".
                     " OR UPPER(b.razon_soc) LIKE ?".
-                    " OR UPPER(c.etiqueta) LIKE ?)";
+                    " OR UPPER(c.etiqueta) LIKE ?) order by a.rz";
             
             $retorno=$this->db->query($sql, array($b,$b,$b))->result();
             if((is_array($retorno))){
