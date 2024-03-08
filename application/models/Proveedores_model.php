@@ -50,7 +50,7 @@ class Proveedores_model extends CI_Model {
         {
             $b="%".trim(strtoupper($b))."%";
             $sql="SELECT a.*, d.cond_iva AS cdiva_nombre,".
-                " IFNULL(b.razon_soc, '') AS empresa_nombre,".
+                " IFNULL(b.datos, '') AS empresa_nombre,".
                 " IFNULL(c.etiqueta, '') AS etiqueta_nombre".
                 " FROM proveedores a".
                 " LEFT JOIN empresas b ON a.id_empresa=b.id_empresa".
@@ -75,7 +75,7 @@ class Proveedores_model extends CI_Model {
     public function buscar($id)
         {
             $sql="SELECT a.*, d.cond_iva AS cdiva_nombre,".
-                " IFNULL(b.razon_soc, '') AS empresa_nombre,".
+                " IFNULL(b.datos, '') AS empresa_nombre,".
                 " IFNULL(c.etiqueta, '') AS etiqueta_nombre,".
                 " DATE_FORMAT(a.baja, '%d/%m/%Y') AS fecha_baja".  
                 " FROM proveedores a".

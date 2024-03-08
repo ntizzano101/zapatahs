@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?=base_url()?>">SEMEINSA</a>
+      <a class="navbar-brand" href="<?=base_url()?>">ZAPATA HS</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -19,7 +19,12 @@
             <li><a href="<?=base_url()?>clientes">Clientes</a></li>
             <li><a href="<?=base_url()?>etiquetas">Etiquetas </a></li>
             <li><hr></li>            
-            <li><a href="<?=base_url()?>ventas/listar">Comprobantes</a></li>          
+            <li><a href="<?=base_url()?>ventas/listar">Comprobantes</a></li>    
+            <li><hr></li>  
+            <li><a href="<?=base_url()?>ventas/listar">Ret Ganancias</a></li>    
+            <li><a href="<?=base_url()?>ventas/listar">Ret IVA</a></li>    
+            <li><a href="<?=base_url()?>ventas/listar">Ret SUS</a></li>    
+            <li><a href="<?=base_url()?>ventas/listar">Ret Ingr.Bru.</a></li>          
           </ul>
         </li> 
         <li class="dropdown">

@@ -42,7 +42,7 @@ class Login extends CI_Controller {
 		if($usu){
 				$datos=array("id"=>$usu[0]->id,"usuario"=>$usu[0]->username,"titulo"=>$usu[0]->apellido . ", " . $usu[0]->nombre );
 				$this->session->set_userdata($datos);
-				redirect('tablero');			
+				redirect('clientes');			
 		}
 		else{
 			$data["mensaje"]="Usuario o Password Incorrecto";
