@@ -22,8 +22,8 @@
                     <br>
                     <form class="navbar-form navbar-left" role="search" method="POST" action="<?php echo base_url(); ?>ventas/buscar">
                     Cliente<input type="text" class="form-control" name="buscar" >
-                    Fecha Desde<input type="date" class="form-control" name="fdesde">
-                    Fecha Hasta<input type="date" class="form-control" name="fhasta">
+                    Fecha Desde<input type="date" class="form-control" name="fdesde" value="<?=$fdesde?>">
+                    Fecha Hasta<input type="date" class="form-control" name="fhasta" value="<?=$fhasta?>">
                     <button type="submit" class="btn btn-default">Buscar</button>								
                     </form>	
                 </div>

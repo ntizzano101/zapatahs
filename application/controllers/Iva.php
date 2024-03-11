@@ -72,7 +72,13 @@ class Iva extends CI_Controller {
     {
        
         $this->load->model('iva_model');
-        $data["iva"]=$this->iva_model->posicion($mes,$anio);
+        $peri=$this->input->post('peri');
+        if($peri==''){$peri=date('Ym');}
+        $todo=$this->iva_model->posicion($peri);
+        $data["debito1"]=$todo[0];
+        $data["credito1"]=$todo[1];
+        $data["credito2"]=$todo[2];
+        $data["peri"]=$peri;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('iva/posicion_iva.php',$data);

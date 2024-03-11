@@ -36,7 +36,9 @@ class Facturas extends CI_Controller {
         $buscar="";
         if (isset($_SESSION["flt_factura"])){$buscar=$_SESSION["flt_factura"];}
         $this->load->model('facturas_model');
-        $data["facturas"]=$this->facturas_model->listado($buscar);
+        $data["facturas"]=$this->facturas_model->listado($buscar,date("Y-m-d"),date("Y-m-d"));
+        $data["fdesde"]=date("Y-m-d");
+        $data["fhasta"]=date("Y-m-d");
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas.php',$data);
@@ -46,9 +48,15 @@ class Facturas extends CI_Controller {
     public function buscar()
     {
         $buscar=$this->input->post('buscar');
+        $fdesde=$this->input->post('fdesde');
+        if($fdesde==""){$fdesde=date("Y-m-d");}
+        $fhasta=$this->input->post('fhasta');
+        if($fhasta==""){$fhasta=date("Y-m-d");}
         $this->load->model('facturas_model');
-        $data["facturas"]=$this->facturas_model->listado($buscar);
+        $data["facturas"]=$this->facturas_model->listado($buscar,$fdesde,$fhasta);
         $_SESSION["flt_factura"]=$buscar;
+        $data["fdesde"]=$fdesde;
+        $data["fhasta"]=$fhasta;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas.php',$data);

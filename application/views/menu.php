@@ -21,10 +21,7 @@
             <li><hr></li>            
             <li><a href="<?=base_url()?>ventas/listar">Comprobantes</a></li>    
             <li><hr></li>  
-            <li><a href="<?=base_url()?>ventas/listar">Ret Ganancias</a></li>    
-            <li><a href="<?=base_url()?>ventas/listar">Ret IVA</a></li>    
-            <li><a href="<?=base_url()?>ventas/listar">Ret SUS</a></li>    
-            <li><a href="<?=base_url()?>ventas/listar">Ret Ingr.Bru.</a></li>          
+            <li><a href="<?=base_url()?>retenciones">Retenciones</a></li>                
           </ul>
         </li> 
         <li class="dropdown">
@@ -59,7 +56,7 @@
             <li><a href="<?=base_url()?>categorias">Categorias</a></li>
           </ul>
         </li>
-		
+<!--		
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Caja<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -67,7 +64,7 @@
             <li><a href="<?=base_url()?>alumnos_cc/listar_facturas">Codigos Ingreso/Egreso</a></li>
             
           </ul>
-        </li>        
+        </li>  <-->      
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

@@ -67,7 +67,7 @@ class Ventas_model extends CI_Model {
         
         
     //FACTURAS
-    public function listado($b)
+    public function listado($b,$c,$d)
         {
             $sql="SELECT a.id_factura AS id".
                 ", DATE_FORMAT(a.fecha, '%d/%m/%Y') AS fecha".
@@ -81,7 +81,7 @@ class Ventas_model extends CI_Model {
                 " WHERE TRUE ";
             
             
-            if(trim($b) !=""){
+            /**if(trim($b) !=""){
                 $esFch=false;
                 if (substr_count($b,"/")==2){
                     list($dia,$mes,$anio)= explode("/",$b);
@@ -96,14 +96,16 @@ class Ventas_model extends CI_Model {
                 if($esFch){
                     $sql.=" AND a.fecha=?";
                 }else{
+             **/       
                     $b="%".trim(strtoupper($b))."%";
                     $sql.="  AND (UPPER(b.cliente) LIKE ? or  UPPER(e.datos) LIKE ?)";
-                }
-            }
-             
+              //  }
+              
+            //}
+            $sql.="  AND a.fecha between ? and ? ";
             $sql.="  order by a.fecha desc ,a.cliente ,a.puerto,a.numero,a.codigo_comp,a.letra LIMIT 100";
             
-            $retorno=$this->db->query($sql, array($b,$b))->result();
+            $retorno=$this->db->query($sql, array($b,$b,$c,$d))->result();
             if((is_array($retorno))){
                 return $retorno;
             }

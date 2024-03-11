@@ -46,8 +46,14 @@ class Ventas extends CI_Controller {
     {
        
         $buscar=$this->input->post('buscar');
+        $fdesde=$this->input->post('fdesde'); 
+        if($fdesde==""){$fdesde=date("Y-m-d");}       
+        $fhasta=$this->input->post('fhasta');        
+        if($fhasta==""){$fhasta=date("Y-m-d");}       
         $this->load->model('ventas_model');
-        $data["facturas"]=$this->ventas_model->listado($buscar);
+        $data["facturas"]=$this->ventas_model->listado($buscar,$fdesde,$fhasta);
+        $data["fdesde"]=$fdesde;
+        $data["fhasta"]=$fhasta;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('ventas/facturas.php',$data);
@@ -259,7 +265,9 @@ class Ventas extends CI_Controller {
     {
        
         $this->load->model('ventas_model');
-        $data["facturas"]=$this->ventas_model->listado("");
+        $data["facturas"]=$this->ventas_model->listado("",date("Y-m-d"),date("Y-m-d"));
+        $data["fdesde"]=date("Y-m-d");
+        $data["fhasta"]=date("Y-m-d");
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');      
         $this->load->view('ventas/facturas.php',$data);
