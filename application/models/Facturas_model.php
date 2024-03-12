@@ -220,16 +220,32 @@ class Facturas_model extends CI_Model {
             $this->db->query($sql, array($id));
             $retorno ="El artículos se ha eliminado con éxito";
         }
-        return $retorno;
-        
-        
-        
-        
-        
-        
-        return $retorno;
-           
+        return $retorno;           
         }  
-          
+    public function cmb_cbus(){
+        $sql="select id,banco from bancos";        
+        $r =$this->db->query($sql)->result();
+        $a=array();
+        foreach($r as $v){
+                $a[$v->id]=$v->banco;    
+        }
+        if(count($a)==0){$a=array("0"=>"NINGUNO");}
+        return $a;
+    }          
+    public function cmb_comps_asoc($id_cliente,$tipo){
+        $sql="select concat(DATE_FORMAT(fecha, '%d/%m/%Y'),' ',letra,' ', LPAD(puerto,5,'0') , '-' ,LPAD(numero,8,'0')) as Fac,
+        id_factura from facturas where id_cliente=? and 
+        (codigo_comp in(1,2) and 3=?  
+                or 
+         codigo_comp in(201,202) and 203=?) 
+         and id_comp_asoc=0";        
+        $r =$this->db->query($sql,array($id_cliente,$tipo,$tipo))->result();
+        $a=array();
+        foreach($r as $v){
+                $a[$v->id_factura]=$v->Fac;    
+        }
+        if(count($a)==0){$a=array("0"=>"NINGUNO");}
+        return $a;
+    }          
 }
 ?>

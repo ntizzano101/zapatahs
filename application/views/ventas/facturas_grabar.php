@@ -116,8 +116,60 @@
                                         value="" readonly="readonly">                                       
                                 </div>                               
                         </div>    
-                                        
-                        
+                        <div class="row">
+                            <div class="col-md-3">            
+                                    <label for="cond">Servicios Desde</label>
+                                    <input type="date" name="sdesde" id="sdesde" 
+                                        value=""   class="form-control"/>                                                                             
+                                    <div>
+                                        <small><font color="red" id="error_sdesde">                                        
+                                        </font></small>
+                                    </div>                                 
+                            </div>                                 
+                            <div class="col-md-3">            
+                                    <label for="cond">Servicios Hasta</label>
+                                    <input type="date" name="shasta" id="shasta" 
+                                        value=""   class="form-control"/>                                                                             
+                                    <div>
+                                       <small><font color="red" id="error_shasta">                                        
+                                        </font></small>
+                                    </div>                                              
+                            </div>
+                             <div class="col-md-3">  
+                                    <label for="Direccion">CBU INFORMADO</label>
+                                    <?php
+                                    $this->load->helper('form');                     
+                                    echo form_dropdown('cbu', $bancos, $cbu,'class="form-control" id="cbu"');
+                                    ?>
+                                    <div>
+                                       <small><font color="red" id="cbu">                                        
+                                        </font></small>
+                                    </div>                                              
+                             </div> 
+                             <div class="col-md-3">  
+                                    <label for="Direccion">COMPROBANTE ASOCIADO</label>
+                                    <?php
+                                    echo form_dropdown('comp_asoc', $comps_asoc,0,'class="form-control" id="id_comp_asoc"');
+                                    ?>
+                                    <div>
+                                       <small><font color="red" id="cbu">                                        
+                                        </font></small>
+                                    </div>                                              
+                             </div>                               
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">             
+                            <label for="cond">Fecha Vence Comprobante</label>
+                                    <input type="date" name="vfecha" id="vfecha" 
+                                        value=""   class="form-control"/>                                                                             
+                                    <div>
+                                       <small><font color="red" id="error_vfecha">                                        
+                                        </font></small>
+                                    </div>              
+                            </div>                               
+                            <div class="col-md-6">                        
+                            </div>                               
+                        </div>
                         
                         <br>
                         <hr>  
@@ -365,7 +417,8 @@
                                 <option value="0.05">0008 (5%)</option>
                                 <option value="0.025">0009 (2.5%)</option>
                                 -->
-                                <option value="0.21">0005 (21%)</option>
+                                <option value="0.105">(10.5%)</option>
+                                <option value="0.21">(21%)</option>
                                 <option value="0">Exento</option>
                             </select>
                         </div>
@@ -487,12 +540,12 @@ $(document).ready(function(){
                 $("#proviva").val(data.cond_iva);
                 $("#cuit").val(data.cuit);
                 $("#itemIva").html("")
-                if($.trim(data.cond_iva)=="Consumidor Final" || $.trim(data.cond_iva)=="Exento"){
-                    $("#itemIva").html("<option value='0' Selected='Selected'>Exento</option>");
-                }
-                else{
-                    $("#itemIva").html('<option value=".105">10,5%</option><option value=".21" Selected="Selected">21%</option>');
-                }                
+                //if($.trim(data.cond_iva)=="Consumidor Final" || $.trim(data.cond_iva)=="Exento"){
+                //    $("#itemIva").html("<option value='0' Selected='Selected'>Exento</option>");
+                //}
+                //else{
+                    $("#itemIva").html('<option value=".105">10,5%</option><option value=".21" Selected="Selected">21%</option><option value=".0">Exento</option>');
+                //}                
             });
         if($(this).val()==="" || $("#empresa").val()===""){
             $("#cod_afip").html('<option value="">Sin tipos de comprobante</option>');
@@ -716,12 +769,16 @@ function grabar(){
     $("#errPuerto").html("");
     $("#errFecha").html("");
     $("#errTotal").html("");
+    $("#error_sdesde").html("");
+    $("#error_shasta").html("");
     $("#errFormaPago").html("");
     if($("#empresa").val()==""){$("#errEmp").html("Seleccione Una Empresa");proceso=false;}
     if($("#cliente").val()==""){$("#errCli").html("Seleccione Un Clente");proceso=false;}
     if($("#cod_afip").val()==""){$("#errCod_afip").html("Seleccione Un Tipo De Comprobante");proceso=false;}
     if(document.getElementById('factnro1').value==''){$("#errPuerto").html("Seleccione Un Puerto/Punto de Venta");proceso=false;}
     if($("#fecha").val()==""  ||  $("#fecha").val().length!=10){$("#errFecha").html("Fecha Incorrecta");proceso=false;}
+    if($("#sdesde").val()==""  ||  $("#sdesde").val().length!=10){$("#error_sdesde").html("Fecha Incorrecta");proceso=false;}
+    if($("#shasta").val()==""  ||  $("#shasta").val().length!=10){$("#error_shasta").html("Fecha Incorrecta");proceso=false;}    
     if($("#intTotal").val()=="0"  || $("#intTotal").val()==""){$("#errTotal").html("El Total No Puede Ser Cero");proceso=false;}
     if($("#formaPago").val()==""){$("#errFormaPago").html("Seleccione Forma de Pago");proceso=false;}
     if(proceso===true){             ;
@@ -744,6 +801,10 @@ function grabar(){
             intTotal:$('#intTotal').val(),
             obs:$('#obs').val(),
             cuit:$('#cuit').val(),
+            cbu:$('#cbu').val(),
+            sdesde:$('#sdesde').val(),
+            shasta:$('#shasta').val(),
+            id_comp_asoc:$('#id_comp_asoc').val(),
             items:$('#items').val() } ,
             function(data){
                 $('#errores').html('');

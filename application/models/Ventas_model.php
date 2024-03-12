@@ -133,60 +133,7 @@ class Ventas_model extends CI_Model {
         return $retorno;
         }    
     
-    public function guardar_SP($obj)
-        {
-        //$obj->periva=trim($this->input->post('periva'));Falta
-        //$usuario="21890143";
-        $usuario=$_SESSION["id"];
-        if(!(is_numeric($obj->intImpNeto))){$obj->intImpNeto="0.00";}
-        if(!(is_numeric($obj->intIva))){$obj->intIva="0.00";}
-        if(!(is_numeric($obj->intPerIngB))){$obj->intPerIngB="0.00";}
-        if(!(is_numeric($obj->intPerIva))){$obj->intPerIva="0.00";}
-        if(!(is_numeric($obj->intPerGnc))){$obj->intPerGnc="0.00";}
-        if(!(is_numeric($obj->intPerStaFe))){$obj->intPerStaFe="0.00";}
-        if(!(is_numeric($obj->intImpExto))){$obj->intImpExto="0.00";}
-        if(!(is_numeric($obj->intConNoGrv))){$obj->intConNoGrv="0.00";}
-        if(!(is_numeric($obj->intTotal))){$obj->intTotal="0.00";}
-        
-        //list($prM,$prA)= explode("/", $obj->periva);
-        
-        $mtz=array(
-            $obj->fecha,    //0
-            $obj->factnro1,//1            
-            $obj->cod_afip,//2
-            $obj->obs,//3
-            $obj->formaPago,//4
-            $obj->empresa,//5            
-            $obj->intImpNeto,//6
-            $obj->intIva,//7
-            $obj->intPerIngB,//6
-            $obj->intPerIva,//9
-            $obj->intPerGnc,//10
-            $obj->intPerStaFe,//11
-            $obj->intImpExto,//12
-            $obj->intConNoGrv,//13
-            $obj->intTotal,//14            
-            $usuario,//15
-            $obj->cliente,//16
-            $obj->periva,//17
-            $obj->items//18
-        );
-        
-      
-        $sql="CALL ingfacturaclie(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        $data= array();
-        try{
-        $retorno=$this->db->query($sql, $mtz);
-        } catch (Exception $ex) {
-            echo "error ". $ex." <br>";
-        }        
-        if($retorno){
-            $data = $retorno->row_array();
-            $retorno->free_result();
-            $retorno->next_result();
-        }
-            return $data;       
-    } 
+   
     
     public function borrar($id)
         {

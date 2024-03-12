@@ -91,7 +91,7 @@ class Facturas extends CI_Controller {
         
         $data["factura"]=$obj;
         $data["lista_proveedores"]=$this->facturas_model->lista_proveedores();
-        $data["lista_empresas"]=$this->facturas_model->lista_empresas();
+        $data["lista_empresas"]=$this->facturas_model->lista_empresas();       
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas_grabar.php',$data);
