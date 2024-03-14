@@ -22,7 +22,7 @@
                                     <option value="">Seleccione una empresa</option>
                                 <?php foreach ($lista_empresas as $emp) {?>
                                     <option value="<?=$emp->id_empresa?>"
-                                        <?php if ($emp->id_empresa==$factura->empresa){ echo " selected ";}?> >
+                                        <?php if ($emp->id_empresa==1){ echo " selected ";}?> >
                                         <?=$emp->razon_soc?>
                                     </option>
                                 <?php }?>        
@@ -83,7 +83,7 @@
                             <div class="col-md-6">            
                                     <label for="fecha">Fecha</label>
                                     <input type="date" name="fecha" id="fecha" 
-                                        value="" class="form-control"/> 
+                                        value="<?=date("Y-m-d");?>" class="form-control"/> 
                                     <div>
                                         <small><font color="red" id="errFecha">                                        
                                         </font></small>
@@ -120,7 +120,7 @@
                             <div class="col-md-3">            
                                     <label for="cond">Servicios Desde</label>
                                     <input type="date" name="sdesde" id="sdesde" 
-                                        value=""   class="form-control"/>                                                                             
+                                        value="<?=date("Y-m-d");?>"   class="form-control"/>                                                                             
                                     <div>
                                         <small><font color="red" id="error_sdesde">                                        
                                         </font></small>
@@ -129,14 +129,14 @@
                             <div class="col-md-3">            
                                     <label for="cond">Servicios Hasta</label>
                                     <input type="date" name="shasta" id="shasta" 
-                                        value=""   class="form-control"/>                                                                             
+                                        value="<?=date("Y-m-d");?>"   class="form-control"/>                                                                             
                                     <div>
                                        <small><font color="red" id="error_shasta">                                        
                                         </font></small>
                                     </div>                                              
                             </div>
                              <div class="col-md-3">  
-                                    <label for="Direccion">CBU INFORMADO</label>
+                                    <label for="Direccion">CBU Informado</label>
                                     <?php
                                     $this->load->helper('form');                     
                                     echo form_dropdown('cbu', $bancos, $cbu,'class="form-control" id="cbu"');
@@ -147,7 +147,7 @@
                                     </div>                                              
                              </div> 
                              <div class="col-md-3">  
-                                    <label for="Direccion">COMPROBANTE ASOCIADO</label>
+                                    <label for="Direccion">Comprobante Asociado</label>
                                     <?php
                                     echo form_dropdown('comp_asoc', $comps_asoc,0,'class="form-control" id="id_comp_asoc"');
                                     ?>
@@ -161,7 +161,7 @@
                             <div class="col-md-6">             
                             <label for="cond">Fecha Vence Comprobante</label>
                                     <input type="date" name="vfecha" id="vfecha" 
-                                        value=""   class="form-control"/>                                                                             
+                                        value="<?=date("Y-m-d");?>"   class="form-control"/>                                                                             
                                     <div>
                                        <small><font color="red" id="error_vfecha">                                        
                                         </font></small>
@@ -253,7 +253,7 @@
                             </div>
                             
                             <div class="col-md-6">
-                            <label for="intImpNeto">Importe Neto</label>
+                            <label for="intImpNeto">Importe Neto Gravado</label>
                             <input type="text" name="intImpNeto" id="intImpNeto" 
                                 value="" class="form-control" readonly/>
                             
@@ -372,7 +372,7 @@
                     </div>
                     
                     <div class="col-md-8">  
-                        
+                       <!-- 
                         <div class="form-inline">
                             <input type="text" name="itemTxtBsq" id="itemTxtBsq" placeholder="Filtrar item" class="form-control"/>
                             <input type="button" onclick="buscaItem()" id class="btn btn-default" value="Filtrar" class="form-control"/>
@@ -381,13 +381,14 @@
                             </select>
                             
                         </div>
-                        
+                                !-->
                         
                     <hr>    
                         
                         <div class="row">
                             <label for="itemCod">Código</label>
                             <input type="hidden" name="itemidArt" id="itemidArt" class="form-control"/>
+                            <input type="hidden" name="itemTipo" id="itemTipo" class="form-control"/>
                             <input type="text" name="itemCod" id="itemCod" class="form-control"/> 
                         </div>
 
@@ -417,9 +418,10 @@
                                 <option value="0.05">0008 (5%)</option>
                                 <option value="0.025">0009 (2.5%)</option>
                                 -->
-                                <option value="0.105">(10.5%)</option>
-                                <option value="0.21">(21%)</option>
+                                <option value="0.105">IVA 10.5%</option>
+                                <option value="0.21">IVA 21%</option>
                                 <option value="0">Exento</option>
+                                <option value="0">No Gravado</option>
                             </select>
                         </div>
 
@@ -453,8 +455,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title"></h1>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h1 class="modal-title"></h1>             
             </div>
 
             <!-- Modal body -->
@@ -544,7 +545,7 @@ $(document).ready(function(){
                 //    $("#itemIva").html("<option value='0' Selected='Selected'>Exento</option>");
                 //}
                 //else{
-                    $("#itemIva").html('<option value=".105">10,5%</option><option value=".21" Selected="Selected">21%</option><option value=".0">Exento</option>');
+                    $("#itemIva").html('<option value=".105">IVA 10,5%</option><option value=".21" Selected="Selected">IVA 21%</option> <option value="E">Exento</option><option value="N">No Gravado</option>');
                 //}                
             });
         if($(this).val()==="" || $("#empresa").val()===""){
@@ -638,6 +639,7 @@ $(document).ready(function(){
                 itemPrcU:$("#itemPrcU").val(),
                 itemIva:$("#itemIva").val(),
                 itemidArt:$("#itemidArt").val(),
+                itemTipo:$("#itemTipo").val(),
                 textIva:$("#itemIva option:selected").text(),
                 itemTotal:$("#itemTotal").val(),
                 items:$("#items").val()
@@ -804,9 +806,11 @@ function grabar(){
             cbu:$('#cbu').val(),
             sdesde:$('#sdesde').val(),
             shasta:$('#shasta').val(),
+            vfecha:$('#vfecha').val(),
             id_comp_asoc:$('#id_comp_asoc').val(),
             items:$('#items').val() } ,
-            function(data){
+            function(data){      
+                alert(data);        
                 $('#errores').html('');
                 $('#errores').html(data);
                     if(data.error==""){

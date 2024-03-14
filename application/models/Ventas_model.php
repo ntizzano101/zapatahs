@@ -220,7 +220,12 @@ class Ventas_model extends CI_Model {
             excento,
             total,
             neto,
-            iva )VALUES(";        
+            iva,
+            serv_desde,
+            serv_hasta,
+            cbu,
+            id_comp_asoc,
+            vence )VALUES(";        
         $sql.="    ?,";  // id_cliente 1
         $sql.="    ?,";  //fecha 2
         $sql.="    ?,";  //puerto 3 
@@ -235,12 +240,17 @@ class Ventas_model extends CI_Model {
         $sql.="    (SELECT cod_afip_t from cod_afip where id=?),";    //12      
         $sql.="    ?,"; // 13
         $sql.="    (SELECT dni from clientes where id=?)"; //14
-        $sql.="    ,?"; //15
+        $sql.="    (SELECT cliente from clientes where id=?)"; //14
         $sql.="    ,?"; //16 
         $sql.="    ,?"; //17 
         $sql.="    ,?";//18 
-        $sql.="    ,?"; //19 
-        $sql.="    ,?)";    //20               
+        $sql.="    ,?"; //19
+        $sql.="    ,?"; //20
+        $sql.="    ,?"; //21
+        $sql.="    ,?"; //22
+        $sql.="    ,(SELECT cbu from bancos where id=? )";  // 10 
+        $sql.="    ,?"; //24      
+        $sql.="    ,?)";    //25               
         $mtz=array();
         $mtz[]=$obj->cliente;
         $mtz[]=$obj->fecha;
@@ -261,9 +271,16 @@ class Ventas_model extends CI_Model {
         $mtz[]=$obj->intImpExto;
         $mtz[]=$obj->intTotal;
         $mtz[]=$obj->intImpNeto;
-        $mtz[]=$obj->intIva;                   
+        $mtz[]=$obj->intIva;   
+        $mtz[]=$obj->sdesde; 
+        $mtz[]=$obj->shasta; 
+        $mtz[]=$obj->cbu; 
+        $mtz[]=$obj->id_comp_asoc; 
+        $mtz[]=$obj->vence; 
+
         $this->db->query($sql, $mtz) ;
-        $last_id=$this->db->insert_id();
+       
+        $last_id=$this->db->insert_id();        
         //Ahora los items 
         $neto21=0;
         $neto105=0;
@@ -274,7 +291,9 @@ class Ventas_model extends CI_Model {
         $neto=0;
         $iva=0;
         foreach($items as $x){
-             $x->iva=$x->iva*100;
+             if(is_numeric($x->iva))
+             {$x->iva=$x->iva*100;$x->tipo="I";}
+             else{$x->tipo=$x->iva;$x->iva=0;}
              if($x->iva==21){$neto21=$neto21+ $x->prcu * $x->cant;
                             $iva21=$iva21+($x->prcu * $x->cant)*0.21; }
              if($x->iva==10.5){$neto105=$neto105+$x->prcu * $x->cant; 
@@ -287,7 +306,7 @@ class Ventas_model extends CI_Model {
              $costo=0;
              if(count($a)>0)             
                 $costo=$a[0]["costo"];
-             $sql="INSERT INTO factura_items(id_factura,id_art,articulo,costo,precio,iva,cantidad,dto) values(?,?,?,?,?,?,?,?)";
+             $sql="INSERT INTO factura_items(id_factura,id_art,articulo,costo,precio,iva,cantidad,dto,tipo) values(?,?,?,?,?,?,?,?,?)";
              $mtz=array(
                 $last_id,
                 $x->id_art,
@@ -296,10 +315,10 @@ class Ventas_model extends CI_Model {
                 $x->prcu,
                 $x->iva,
                 $x->cant,
-                0
+                0,
+                $x->tipo
              );      
-            // echo $sql;
-            // print_r($mtz);die;
+         
              $this->db->query($sql, $mtz);
         }
         $iva=$iva21+$iva105;
@@ -333,6 +352,9 @@ class Ventas_model extends CI_Model {
         $a=$query->result();    
         if(in_array($a[0]->letra,array('A','B'))){
                 //dejo el numero en cero porque lo tiene que resolver Afip
+                
+
+
             }
             else
             {    

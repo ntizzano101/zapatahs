@@ -87,6 +87,7 @@ class Ajax extends CI_Controller {
         $textIva=$this->input->post('textIva');
         $itemidArt=$this->input->post('itemidArt');
         $itemTotal=$this->input->post('itemTotal');
+        $itemTipo=$this->input->post('itemTipo');
         $items=$this->input->post('items');
         
         $mtzItems= json_decode($items,true);
@@ -99,6 +100,7 @@ class Ajax extends CI_Controller {
         $fila["prcu"]=sprintf("%.2f",$itemPrcU);
         $fila["iva"]=$itemIva;
         $fila["txiva"]=$textIva;
+        $fila["tipo"]=$itemTipo;
         $fila["total"]=sprintf("%.2f",$itemTotal);
         
         array_push($mtzItems, $fila);

@@ -42,10 +42,18 @@ font-size:small;
 	<?php } ?>
 	</td>		
 	<td width="45%" align="right" valign="top">
-	    FECHA :<?=fechaDBtoHtml($venta->fecha) ?><br> 
-		<?=$venta->nombre_c?>:<?php printf("%05d-%08d",$venta->puerto,$venta->numero) ?><br>
+	<?=$venta->nombre_c?>:<?php printf("%05d-%08d",$venta->puerto,$venta->numero) ?><br>
+	    FECHA FACTURA  :<?=fechaDBtoHtml($venta->fecha) ?> <br>
+		<?php
+		if($venta->codigo_comp=='201'){ echo "VENCE:". fechaDBtoHtml($venta->vence) . "<br>";}		
+		?>
 		CUIT :<?=$empresa->cuit?><br>
 		IIBB :<?=$empresa->nro_iibb?><br>
+		SERVICIO DESDE : <?=fechaDBtoHtml($venta->serv_desde) ?><br> 
+		SERVICIO HASTA : <?=fechaDBtoHtml($venta->serv_hasta) ?><br>
+		<?php
+		if($venta->codigo_comp=='201'){ echo "CBU:". fechaDBtoHtml($venta->cbu) . "<br>";}		
+		?>
 	</td>	
 </tr>
 <tr>
@@ -84,14 +92,19 @@ font-size:small;
 				<td ><?php echo $it->cantidad ?></td>
 				<?php if(($cliente->iva==1 or $cliente->iva==6) and ($venta->letra=='A' or $venta->letra=='P')) {?>
 				<td ><?php echo $it->articulo ?></td>
-				<td align="right"><?php echo $it->iva * 100 ?></td>
+				<td align="right"><?php 
+				if($it->tipo=="E"){echo "Exento";}
+				if($it->tipo=="N"){echo "No Grav.";}
+				if($it->tipo=="I"){echo  $it->iva;}
+				 ?></td>
 				<?php } 
 				else {
 				?>
 				<td colspan="2" ><?php echo $it->articulo ?></td>
 				<?php } ?>
 				<td align="right"><?php echo $it->precio ?></td>
-				<td align="right"><?php echo $it->precio *  $it->cantidad?></td>			
+				<td align="right"><?php 
+								printf("%.2f",$it->precio *  $it->cantidad)?></td>			
 			</tr>
 		<?php } else { ?>
 			<tr>		
@@ -116,7 +129,11 @@ font-size:small;
 	</tr>
 	<?php if(($cliente->iva==1 or $cliente->iva==6) and ($venta->letra=='A' or $venta->letra=='P')){ ?>
 		<tr>
-			<td width="80%" colspan="2" align="right">SUBTOTAL</td>			
+			<td width="80%" colspan="2" align="right">Importe Exento</td>			
+			<td width="20%" align="right"><b><?php echo $venta->excento?></b></td>
+		</tr>		
+		<tr>
+			<td width="80%" colspan="2" align="right">Importe Neto Gravado</td>			
 			<td width="20%" align="right"><b><?php echo $venta->neto ?></b></td>
 		</tr>		
 		<tr>
