@@ -200,7 +200,7 @@ class Ventas_model extends CI_Model {
         $obj->periva=$ano.$mes;
         $items=json_decode($obj->items);          
         //guardo encabezado          
-        $sql="INSERT INTO FACTURAS(
+        $sql="INSERT INTO facturas(
             id_cliente, 
             fecha,
             puerto,
