@@ -55,7 +55,7 @@
                                     <td><?=$fact->datos ?></td>
                                     <td><?=$fact->cliente ?></td>
                                     <td><?=$fact->fecha ?></td>                                    
-                                    <td><a href="#" id="renglon<?=$fact->id?>" onClick="modificar_nro(<?=$fact->id?>)"><?php echo $fact->nombre . " " .  str_pad($fact->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($fact->numero,8,"0",STR_PAD_LEFT) ;  ?></a></td>                                    
+                                    <td><a href="#" id="renglon<?=$fact->id?>" onClick=""><?php echo $fact->nombre . " " .  str_pad($fact->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($fact->numero,8,"0",STR_PAD_LEFT) ;  ?></a></td>                                    
                                     <td align="right"><?php printf("$ %0.2f", $fact->total * $mult) ?></td>
                                     <td>
                                         <a class="btn-default fa fa-eye" title="Ver Comprobante" 

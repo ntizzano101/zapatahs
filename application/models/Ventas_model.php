@@ -239,7 +239,7 @@ class Ventas_model extends CI_Model {
         $sql.="    (SELECT id_tipo_comp from cod_afip where id=? ),"; //11
         $sql.="    (SELECT cod_afip_t from cod_afip where id=?),";    //12      
         $sql.="    ?,"; // 13
-        $sql.="    (SELECT dni from clientes where id=?)"; //14
+        $sql.="    (SELECT dni from clientes where id=?),"; //14
         $sql.="    (SELECT cliente from clientes where id=?)"; //14
         $sql.="    ,?"; //16 
         $sql.="    ,?"; //17 
@@ -276,10 +276,8 @@ class Ventas_model extends CI_Model {
         $mtz[]=$obj->shasta; 
         $mtz[]=$obj->cbu; 
         $mtz[]=$obj->id_comp_asoc; 
-        $mtz[]=$obj->vence; 
-
-        $this->db->query($sql, $mtz) ;
-       
+        $mtz[]=$obj->vence;         
+        $this->db->query($sql, $mtz);        
         $last_id=$this->db->insert_id();        
         //Ahora los items 
         $neto21=0;

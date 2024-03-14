@@ -1,4 +1,7 @@
 <?php
+if($venta->cae==''){
+	die("<h3>Comprobante sin CAE no se puede Visualizar<hr>".$venta->cae_resultado."</h3>");
+}
 function fechaDBtoHtml($t){
 	list($ano,$mes,$dia)=explode("-",$t);
 	if($ano+$mes+$dia==0)
@@ -53,7 +56,7 @@ font-size:small;
 		SERVICIO DESDE : <?=fechaDBtoHtml($venta->serv_desde) ?><br> 
 		SERVICIO HASTA : <?=fechaDBtoHtml($venta->serv_hasta) ?><br>
 		<?php
-		if($venta->codigo_comp=='201'){ echo "CBU:". fechaDBtoHtml($venta->cbu) . "<br>";}		
+		if($venta->codigo_comp=='201'){ echo "CBU:". $venta->cbu . "<br>";}		
 		?>
 	</td>	
 </tr>

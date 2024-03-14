@@ -1,8 +1,6 @@
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
-   
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -235,14 +233,9 @@
                                 <div class="row">
                                     <label for="formaPago">Forma de pago</label>
                                     <select name="formaPago" id="formaPago" class="form-control">
-                                        <option value=""
-                                             <?php if ($factura->formaPago==""){ echo " selected ";}?>  
-                                            >Seleccione una forma de pago</option>
-                                        <option value="0" 
-                                            <?php if ($factura->formaPago=="0"){ echo " selected ";}?>    
-                                            >Contado</option>
-                                        <option value="1"
-                                           <?php if ($factura->formaPago=="1"){ echo " selected ";}?>     
+                                        <option value=""                                    
+                                            >Seleccione una forma de pago</option>                                      
+                                        <option value="1" selected      
                                             >Cuenta corriente</option>
                                     </select>
                                     <div >
@@ -809,8 +802,7 @@ function grabar(){
             vfecha:$('#vfecha').val(),
             id_comp_asoc:$('#id_comp_asoc').val(),
             items:$('#items').val() } ,
-            function(data){      
-                alert(data);        
+            function(data){                       
                 $('#errores').html('');
                 $('#errores').html(data);
                     if(data.error==""){
