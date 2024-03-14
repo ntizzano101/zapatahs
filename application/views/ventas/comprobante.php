@@ -13,6 +13,7 @@ function fechaDBtoHtml($t){
 body{
 	font-family:verdana;
 	font-size:small;
+	
 }
 .tr1{
 
