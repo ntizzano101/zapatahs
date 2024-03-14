@@ -322,7 +322,7 @@ class Ventas_model extends CI_Model {
         $iva=$iva21+$iva105;
         $neto=$neto21+$neto105;
         $total=$neto21+$neto105+$iva21+$iva105+$exento;    
-        $sql="UPDATE FACTURAS set 
+        $sql="UPDATE facturas set 
         total=?,
         excento=?,
         iva21=?,
