@@ -72,9 +72,7 @@
                             <div class="col-md-3">            
                                         <label>Nro Comprobante</label>     
                                             <input type="text" name="factnro2" id="factnro2" 
-                                             value="" class="form-control" readonly />
-                                        
-                                        
+                                             value="" class="form-control" readonly />                                                               
                             </div>  
                         </div>      
                         <div class="row">
