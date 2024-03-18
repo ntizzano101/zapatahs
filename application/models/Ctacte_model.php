@@ -37,7 +37,7 @@ class Ctacte_model extends CI_Model {
             " FROM facturas fac".
             " INNER JOIN cod_afip cod on fac.cod_afip = cod.cod_afip".
             " WHERE fac.id_proveedor=?".
-            " ORDER BY fe_orden";
+            " ORDER BY fe_orden,tt";
             
             $retorno=$this->db->query($sql, array($id_prov, $id_prov))->result();
             return $retorno;
