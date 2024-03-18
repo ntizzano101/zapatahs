@@ -115,8 +115,7 @@
                         </div>
                         
                         <br>
-                        <hr>  
-                        
+                        <hr>                         
                         <div id="tbFactura">
                             <input type=button id="btnVerMdItem" value="Nuevo item" onclick="verMdItem()" />
                             <table class="table table-striped">
@@ -145,7 +144,7 @@
                                         <td><?=$un_item["desc"]?>
                                         <td><?=$un_item["cant"]?>
                                         <td><?=$un_item["prcu"]?>
-                                        <td><?=$un_item["iva"]?>
+                                        <td><?=$un_item["txiva"]?>
                                         <td><?=$un_item["total"]?>
                                         <td><a class="btn-default fa fa-eraser" title="Borrar"
                                             onclick="quitaItem(<?=$i?>)">
@@ -169,7 +168,11 @@
                             </table>
                             
                         </div>
-                        
+                        <div id="errItems">
+                                    <small><font color="red">
+                                        <?php if (isset($error->intItems)){echo $error->intItems;}?> 
+                                    </font></small>
+                                </div>      
                         <br>
                         <hr>  
                         
@@ -183,7 +186,7 @@
                                             >Seleccione una forma de pago</option>
                                         <option value="0" 
                                             <?php if ($factura->formaPago=="0"){ echo " selected ";}?>    
-                                            >Contado</option>
+                                            >Contado (Cancela Automaticamente en pesos)</option>
                                         <option value="1"
                                            <?php if ($factura->formaPago=="1"){ echo " selected ";}?>     
                                             >Cuenta corriente</option>
@@ -193,12 +196,15 @@
                                             <?php if (isset($error->formaPago)){echo $error->formaPago;}?> 
                                         </font></small>
                                     </div>
+                                    <div id="tablitaIva">
+
+                                   </div>
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
-                            <label for="intImpNeto">Importe Neto</label>
-                            <input type="text" name="intImpNeto" id="intImpNeto" 
+                            <label for="intImpNeto">Importe Neto Gravado</label>
+                            <input type="text" name="intImpNeto" id="intImpNeto" readonly="readonly"
                                 value="<?= $factura->intImpNeto==''?'0':$factura->intImpNeto?>" class="form-control"/>
                             <div id="errIntImpNeto">
                                 <small><font color="red">
@@ -208,7 +214,7 @@
                             <br> 
                             
                             <label for="intIva">IVA</label>
-                            <input type="text" name="intIva" id="intIva" 
+                            <input type="text" name="intIva" id="intIva" readonly="readonly"
                                 value="<?= $factura->intIva==''?'0':$factura->intIva ?>" class="form-control"/>
                             <div id="errIntIva">
                                 <small><font color="red">
@@ -262,7 +268,7 @@
                             <br>
                             
                             <label for="intImpExto">Importe exento</label>
-                            <input type="text" name="intImpExto" id="intImpExto" 
+                            <input type="text" name="intImpExto" id="intImpExto" readonly="readonly"
                             value="<?= $factura->intImpExto==''?'0':$factura->intImpExto ?>"
                             class="form-control"/>
                             <div id="errIntImpExto">
@@ -273,7 +279,7 @@
                             <br>
                             
                             <label for="intConNoGrv">Conc. no Gravados</label>
-                            <input type="text" name="intConNoGrv" id="intConNoGrv" 
+                            <input type="text" name="intConNoGrv" id="intConNoGrv" readonly="readonly"
                             value="<?= $factura->intConNoGrv==''?'0':$factura->intConNoGrv ?>"
                             class="form-control"/>
                             <div id="errIntConNoGrv">
@@ -284,7 +290,7 @@
                             <br>
                             
                             <label for="intTotal">Total</label>
-                            <input type="text" name="intTotal" id="intTotal" class="form-control"/>
+                            <input type="text" name="intTotal" readonly="readonly" id="intTotal" class="form-control"/>
                             <br>
                             
                             </div>
@@ -371,18 +377,18 @@
                         <div class="row">
                             <label for="itemIva">IVA</label>
                             <select name="itemIva" id="itemIva" class="form-control">
-                                <option value="0" selected="true" >0003 (0%)</option>
-                                <option value="0.105">0004 (10.5%)</option>
-                                <option value="0.21">0005 (21%)</option>
-                                <option value="0.27">0006 (26%)</option>
-                                <option value="0.05">0008 (5%)</option>
-                                <option value="0.025">0009 (2.5%)</option>
+                                <option value="0" selected="true" >IVA (0%)</option>
+                                <option value="0.105">IVA (10.5%)</option>
+                                <option value="0.21">IVA (21%)</option>
+                                <option value="0.27">IVA (27%)</option>                        
+                                <option value="E">Exento</option>
+                                <option value="N">No Grav</option>
                             </select>
                         </div>
 
                         <div class="row">
                             <label for="itemTotal">Total</label>
-                            <input type="text" name="itemTotal" id="itemTotal" class="form-control"/> 
+                            <input type="text" name="itemTotal" readonly="readonly" id="itemTotal" class="form-control"/> 
                         </div>
                         
                     </div>
@@ -538,6 +544,8 @@ $(document).ready(function(){
                     $("#cpFl").html(data.cpFl);
                     $("#intImpNeto").val(data.intImpNeto);
                     $("#intIva").val(data.intIva);
+                    $("#intImpExto").val(data.intImpExto);
+                    $("#intConNoGrv").val(data.intImpNoGra);
                     calcTotal();
                     $("#mdlItem").modal("hide");
                 });
@@ -558,7 +566,7 @@ $(document).ready(function(){
             });
          
     });
-    
+    calcTotal();  
 });
 
 
@@ -590,7 +598,7 @@ function quitaItem(id){
         {id:id,
         items:$("#items").val()
         },
-        function(data){
+        function(data){            
             $("#items").val(data.items);
             $("#cpFl").html(data.cpFl);
             $("#intImpNeto").val(data.intImpNeto);
@@ -602,8 +610,8 @@ function quitaItem(id){
 function calcPrItem(){
     cantidad=parseFloat($("#itemCant").val());
     precio=parseFloat($("#itemPrcU").val());
-    iva=parseFloat($("#itemIva").val()) ;    
-    total=cantidad * precio * (1 + iva);
+    //en items solo muestro neto , despues discirmino en otro lado...   
+    total=cantidad * precio ;
     if(isNaN(total)){$("#itemTotal").val("");}else{$("#itemTotal").val(total);}    
     
 }
@@ -631,7 +639,14 @@ function calcTotal(){
     if(!(isNaN(intConNoGrv))){total+=intConNoGrv;}
     
     $("#intTotal").val(total);    
-    
+    ///tablita de ivas
+    $.post(CFG.url + 'Ajax/tablitaIva/',
+            {items:$("#items").val()},
+            function(data){
+                $("#tablitaIva").html(data.tablita);       
+                
+            });
+
 }
 
 

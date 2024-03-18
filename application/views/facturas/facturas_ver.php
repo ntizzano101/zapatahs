@@ -88,10 +88,51 @@
                                 </thead>
                                 
                                 <tbody id="cpFl">
+                                    <?php
+                                    $items_arr=array();
+                                    $iva0=0;$iva21=0;$iva27=0;$iva105=0;
+                                    $n0=0;$n21=0;$n27=0;$n105=0;
+                                    foreach($items as $it){
+                                        array_push($items_arr,get_object_vars($it));
+                                    ?>
+                                    <tr>
+                                        <td><?=$it->codigo?></td>
+                                        <td><?=$it->articulo?></td>
+                                        <td><?=$it->cantidad?></td>
+                                        <td><?=$it->precio?></td>
+                                        <td><?php 
+                                                    $px=$it->cantidad*$it->precio;                                                    
+                                                    if($it->tipo=="I")
+                                                        {echo "IVA(".$it->iva."%)";
+                                                            if($it->iva==0){$n0+=$px;} 
+                                                            if($it->iva==21){$n21+=$px;$iva21+=$px*0.21;} 
+                                                            if($it->iva==27){$n27+=$px;$iva27+=$px*0.27;} 
+                                                            if($it->iva==10.5){$n105+=$px;$iva105+=$px*0.105;} 
+                                                        } 
+                                            elseif($it->tipo=="E"){echo "Exento";}
+                                            elseif($it->tipo=="N"){echo "No Grav";}
+                                        ?></td>
+                                        <td><?=$it->precio*$it->cantidad?></td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    <?php
+                                    $n0=round($n0,2);
+                                    $n21=round($n21,2);
+                                    $n105=round($n105,2);
+                                    $n27=round($n27,2);
+
+                                    $iva105=round($iva105,2);
+                                    $iva21=round($iva21,2);
+                                    $iva27=round($iva27,2);
+                                    
+                                    
+                                    if(empty($items)) {?>
                                     <tr>
                                         <td colspan="7" align="center" >Sin Items</td>
                                     </tr>
-                                        
+                                    <?php } ?>    
                                     
                                 </tbody>
                                 
@@ -113,6 +154,40 @@
                                     <label for="formaPago">Forma de pago</label>
                                      <input type="text" name="cod_afip" id="cod_afip" class="form-control"
                                        value="<?=$frmPg?>" disabled/> 
+                                </div>
+                                <input type="hidden" name="items" id="items" value="<?php echo trim(json_encode($items_arr,true));?>">
+                                <div id="tablitaIva">                                
+                                    <table class="table table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Alicuota</th>
+                                            <th scope="col">Neto</th>
+                                            <th scope="col">Iva</th>                
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>                
+                                                <td>IVA 0%</td>
+                                                <td><?=$n0?></td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>                
+                                                <td>IVA 10.5%</td>
+                                                <td><?=$n105?></td>
+                                                <td><?=$iva105?></td>
+                                            </tr>
+                                            <tr>                
+                                                <td>IVA 21%</td>
+                                                <td><?=$n21?></td>
+                                                <td><?=$iva21?></td>
+                                            </tr>
+                                            <tr>                
+                                                <td>IVA 27%</td>
+                                                <td><?=$n27?></td>
+                                                <td><?=$iva27?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>    
                                 </div>
                             </div>
                             
@@ -187,3 +262,35 @@
     </div>
     
 </div>
+<script>
+var CFG = {
+        url: '<?php echo $this->config->item('base_url');?>',
+        token: '<?php echo $this->security->get_csrf_hash();?>'
+    };    
+    
+$(document).ready(function(){
+    
+    $.ajaxSetup({data: {token: CFG.token}});
+    $(document).ajaxSuccess(function(e,x) {
+        var result = $.parseJSON(x.responseText);
+        $('input:hidden[name="token"]').val(result.token);
+        $.ajaxSetup({data: {token: result.token}});  
+    
+    });
+    
+    ///tablita de ivas
+
+
+
+});         
+        
+
+$.post(CFG.url + 'Ajax/tablitaIva/',
+            {items:$("#items").val()},
+            function(data){               
+           
+                $("#tablitaIva").html(data.tablita);       
+                
+            });     
+           
+</script>    

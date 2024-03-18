@@ -97,7 +97,7 @@
                  <label for="itemPrcU">Fecha Del Recibo</label>
                 </td>
                 <td>
-                          <input type="date" name="itemPrcU" id="opagofecha" class="form-control"/> 
+                          <input type="date" name="itemPrcU" value="<?=date('Y-m-d');?>" id="opagofecha" class="form-control"/> 
                 </td>
                  </tr>
                  
@@ -275,6 +275,8 @@ var CFG = {
              otr_comen:$("#otr_comentario").val(),             
              otr_importe:$("#otr_importe").val(),             
              otr_tipo:$("#combo").val(),             
+             otr_fecha:$("#otr_fecha").val(),             
+             otr_comprobante:$("#otr_comprobante").val(),             
             },
             function(data){ 
                 

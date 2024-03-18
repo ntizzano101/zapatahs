@@ -39,6 +39,7 @@ class Facturas extends CI_Controller {
         $data["facturas"]=$this->facturas_model->listado($buscar,date("Y-m-d"),date("Y-m-d"));
         $data["fdesde"]=date("Y-m-d");
         $data["fhasta"]=date("Y-m-d");
+        $data["buscar"]=$buscar;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas.php',$data);
@@ -68,14 +69,14 @@ class Facturas extends CI_Controller {
         $this->load->model('facturas_model');
         
         $obj = new stdClass();
-        $obj->empresa="";
+        $obj->empresa=1;
         $obj->proveedor="";
         $obj->factnro1="";
         $obj->factnro2="";
-        $obj->fecha="";
-        $obj->periva="";
+        $obj->fecha=date('Y-m-d');
+        $obj->periva=date("m/Y");
         $obj->cod_afip="";
-        $obj->formaPago="";
+        $obj->formaPago=1;
         $obj->intImpNeto="";
         $obj->intIva="";
         $obj->intPerIngB="";
@@ -165,7 +166,7 @@ class Facturas extends CI_Controller {
         if(!(is_numeric($obj->intPerStaFe))){$error->intPerStaFe="Debe ser un número";$falla=true;}
         if(!(is_numeric($obj->intImpExto))){$error->intImpExto="Debe ser un número";$falla=true;}
         if(!(is_numeric($obj->intConNoGrv))){$error->intConNoGrv="Debe ser un número";$falla=true;}
-        
+        if($obj->items=='[]'){$error->intItems="La Factura debe Contener Algun item Para Calcular Totales";$falla=true;}      
         if(!$falla){
             $resultado=$this->facturas_model->guardar($obj);
             if ($resultado["estado"]=="0"){
@@ -195,9 +196,13 @@ class Facturas extends CI_Controller {
                 'La factura se ha ingresado con éxito'.
                 '</div>';
 
-            $data["facturas"]=$this->facturas_model->listado("");
+            $data["facturas"]=$this->facturas_model->listado("",$obj->fecha,$obj->fecha);
+            $data["fdesde"]=$obj->fecha;
+            $data["fhasta"]=$obj->fecha;
+            $data["buscar"]="";
             $this->load->view('encabezado.php');
             $this->load->view('menu.php');
+
             $this->load->view('facturas/facturas.php',$data);
         }
         
@@ -207,6 +212,7 @@ class Facturas extends CI_Controller {
     {
         $this->load->model('facturas_model');
         $data["factura"]=$this->facturas_model->buscar($id);
+        $data["items"]=$this->facturas_model->buscar_items($id);
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas_ver.php',$data);
@@ -240,7 +246,12 @@ class Facturas extends CI_Controller {
             }
         }
         
-        $data["facturas"]=$this->facturas_model->listado("");
+        $data["facturas"]=$this->facturas_model->listado("",date('Y-m-d'),date('Y-m-d'));
+        $data["fdesde"]=date('Y-m-d');
+        $data["fhasta"]=date('Y-m-d');
+        if(isset($_SESSION["flt_factura"])){$buscar=$_SESSION["flt_factura"];}
+        else{$buscar="";}
+        $data["buscar"]=$buscar;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('facturas/facturas.php',$data);

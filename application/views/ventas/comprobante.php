@@ -90,6 +90,7 @@ font-size:small;
 			<td  style="border:1px solid #000" >Cant.</td>	
 			<td  style="border:1px solid #000" colspan="4">Descripcion</td>	
 		<?php }  ?>
+		<?php if($venta->cae=="" or $venta->cae=="MIGRACION" ){echo "<tr><td colspan=5><h1>Comprobante de migarcion no Valido</h1></td></tr>";} ?>			
 		<?php foreach ($items as $it) { 
 			if($venta->letra!='R') {?>
 			<tr>		
@@ -127,7 +128,8 @@ font-size:small;
 			</tr>
 		<?php
 		}		
-		?>		
+		?>
+	
 	</table>
 	</td>
 	</tr>
@@ -163,7 +165,7 @@ font-size:small;
 		</td>
 		</tr>	
 	<?php } ?>	
-	<?php if(in_array($venta->letra,array("A","B",))) { ?>
+	<?php if(in_array($venta->letra,array("A","B")) and is_numeric($venta->cae)) { ?>
 	<tr>
 			<td width="100%" colspan="10" align="center">
 				<table width="100%" align="center">
@@ -226,6 +228,7 @@ font-size:small;
 </tr>
 <?php } ?>
 </table>
+
 </center>	
 </body>
 </html>

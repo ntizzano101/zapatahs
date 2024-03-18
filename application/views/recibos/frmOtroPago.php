@@ -17,7 +17,16 @@
                             <p class="text-danger" id="otrError"></p>
                         </div>   
                         
-                       
+                        <div class="row">
+                            <label for="itemCod">Fecha</label>
+                            <input type="date" name="otr_fecha" id="otr_fecha" value="<?=date("Y-m-d");?>" class="form-control"/> 
+                        </div>
+
+                        <div class="row">
+                            <label for="itemCod">Comprobante</label>
+                            <input type="text" name="otr_comprobante" id="otr_comprobante" class="form-control"/> 
+                        </div>
+
                         
                         <div class="row">
                             <label for="itemCod" id="otropagoetiqueta">Comentario</label>

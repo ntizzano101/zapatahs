@@ -168,8 +168,7 @@
                         </div>
                         
                         <br>
-                        <hr>  
-                        
+                        <hr>                          
                         <div id="tbFactura">
                             <input type=button id="btnVerMdItem" value="Nuevo item" onclick="verMdItem()" />
                             <table class="table table-striped">
@@ -222,7 +221,7 @@
                             </table>
                             
                         </div>
-                        
+                              
                         <br>
                         <hr>  
                         

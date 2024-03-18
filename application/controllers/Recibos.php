@@ -39,8 +39,18 @@ class Recibos extends CI_Controller {
     public function ctacte($id_prov)
     {
         $this->load->model('recibo_model');
+        $fdesde=$this->input->post('fdesde');
+        $fhasta=$this->input->post('fhasta');
         $data["ctactes"]=$this->recibo_model->listado($id_prov);
-        $data["proveedor"]=$this->recibo_model->cliente($id_prov);
+        $data["proveedor"]=$this->recibo_model->cliente($id_prov);        
+        if($fdesde==""){
+            $fecha = new DateTime();
+            $fecha->add(DateInterval::createFromDateString('-90 day'));
+            $fdesde=$fecha->format("Y-m-d");
+        }
+        if($fhasta==""){$fhasta=date('Y-m-d');}
+        $data["fdesde"]=$fdesde;
+        $data["fhasta"]=$fhasta;
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('recibos/ctacte.php',$data);
@@ -252,6 +262,8 @@ public function ingreso_pago_otro(){
     $otr_comen=$this->input->post('otr_comen');        
     $otr_importe=$this->input->post('otr_importe');      
     $otr_tipo=$this->input->post('otr_tipo');      
+    $otr_fecha=$this->input->post('otr_fecha');      
+    $otr_comprobante=$this->input->post('otr_comprobante');      
     $data = new stdClass();   
     $data->rta="";    
     if(!(abs($otr_importe)< 9999999999 and $otr_importe!='' and $otr_importe!=0)){
@@ -270,6 +282,8 @@ public function ingreso_pago_otro(){
         $ob2->id_medio_pago=$otr_tipo;
         $ob2->nro_comprobante=$otr_comen;
         $ob2->observaciones='';     
+        $ob2->rete_fecha=$otr_fecha;     
+        $ob2->nro_comprobante=$otr_comprobante;     
         $x=$this->recibo_model->ingreso_pago_otro($ob2); 
     }   
     $resp=json_decode(json_encode($data), true);  
@@ -341,7 +355,7 @@ public function ingreso_pago_otro(){
              <td>'.$y->letra.'('.$y->codigo_comp .')'. $y->puerto. '-'. $y->numero .' </td>';
             if($y->monto > 0 ) {$t=$t.'<td>0</td><td>'.$y->monto.'</td>';}
             else{$t=$t.'<td>'.abs($y->monto).'</td><td>0</td>';}            
-             $t=$t.'<td>'.$total.'</td></tr>';
+             $t=$t.'<td>'.round($total,2).'</td></tr>';
         }     
         foreach($x->opago_pagos as $y){          
             $total=$total-$y->monto;
@@ -349,7 +363,7 @@ public function ingreso_pago_otro(){
              <td colspan="2">'.$y->mpago.' </td>';
             if($y->monto < 0 ) {$t=$t.'<td>0</td><td>'.$y->monto.'</td>';}
             else{$t=$t.'<td>'.abs($y->monto).'</td><td>0</td>';}            
-             $t=$t.'<td>'.$total.'</td></tr>';
+             $t=$t.'<td>'.round($total,2).'</td></tr>';
         }
         $t=$t.'<tr><td colspan="3">Recibo Nro.'.$x->opago[0]->id.'</td>
         <td colspan="2">Fecha.'.$x->opago[0]->fecha.'</td>

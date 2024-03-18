@@ -17,8 +17,12 @@
                     </div>
                 </div>
                 <?php }?>
-                <div class="panel-body">
+                <div class="panel-body">                    
+                    <form class="navbar-form navbar-left" role="search" method="POST" action="<?php echo base_url(); ?>recibos/ctacte/<?=$proveedor->id?>">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>recibos/opago/<?=$proveedor->id?>">Nuevo Recibo</a>
+                    Fecha Desde<input type="date" class="form-control" name="fdesde" value="<?=$fdesde?>">
+                    Fecha Hasta<input type="date" class="form-control" name="fhasta" value="<?=$fhasta?>">
+                    <button type="submit" class="btn btn-default">Buscar</button>		
                     <br>
                 </div>
                 
@@ -35,10 +39,14 @@
                   </thead>
                   <tbody>
                         <?php 
-                        $total=0;
+                        $total=0;$mostre=false;
                         foreach($ctactes as $cta){ 
                             $total=$total + $cta->debe - $cta->haber ;
-                            ?>	
+                            if($cta->fe_orden<$fdesde){
+
+                            }
+                            else{
+                            ?>                            
                                 <tr>
                                     <td><?=$cta->fecha ?></td>
                                     <td><?=$cta->descrip ?></td>
@@ -53,7 +61,8 @@
                                     <td>                                        
                                      </td>
                                 </tr>
-                        <?php	
+                        <?php
+                            }	
                         }
                         ?>
                   </tbody>
