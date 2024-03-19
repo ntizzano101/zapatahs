@@ -48,16 +48,23 @@ class Ventas extends CI_Controller {
     
     public function buscar()
     {
-       
+        $this->load->library('session');
+        $session=$this->session;
         $buscar=$this->input->post('buscar');
         $fdesde=$this->input->post('fdesde'); 
-        if($fdesde==""){$fdesde=date("Y-m-d");}       
+        if($session->has_userdata('fdesde')){$session->fdesde;}else{$fdesde=date("Y-m-d");}               
         $fhasta=$this->input->post('fhasta');        
-        if($fhasta==""){$fhasta=date("Y-m-d");}       
+        if($session->has_userdata('fhasta')){$session->fhasta;}else{$fhasta=date("Y-m-d");}       
         $this->load->model('ventas_model');
         $data["facturas"]=$this->ventas_model->listado($buscar,$fdesde,$fhasta);
         $data["fdesde"]=$fdesde;
         $data["fhasta"]=$fhasta;
+        $newdata = [
+            'buscar'  => $buscar,
+            'fdesde'     => $fdesde,
+            'fhasta' => $fhasta
+        ];        
+        $session->set_userdata($newdata);
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('ventas/facturas.php',$data);
@@ -174,9 +181,15 @@ class Ventas extends CI_Controller {
                 'La factura  no se pudo borrar. Consulte con al administrador del Sistema'.
                 '</div>';
         }
-        
-       
-        $data["facturas"]=$this->ventas_model->listado("");
+        $this->load->library('session');
+        $session=$this->session;
+        if($session->has_userdata('fdesde')){$fdesde=$session->fdesde;}else{$fdesde=date('Y-m-d');}
+        if($session->has_userdata('fhasta')){$fhasta=$session->fhasta;}else{$fhasta=date('Y-m-d');}
+        if($session->has_userdata('buscar')){$buscar=$session->buscar;}else{$buscar="";}
+        $data["facturas"]=$this->ventas_model->listado($buscar,$fdesde,$fhasta);
+        $data["buscar"]=$buscar;
+        $data["fdesde"]=$fdesde;
+        $data["fhasta"]=$fhasta;        
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');
         $this->load->view('ventas/facturas.php',$data);
@@ -187,9 +200,18 @@ class Ventas extends CI_Controller {
     {
        
         $this->load->model('ventas_model');
+        $this->load->library('session');
+        $session=$this->session;
+
         $data["facturas"]=$this->ventas_model->listado("",date("Y-m-d"),date("Y-m-d"));
         $data["fdesde"]=date("Y-m-d");
         $data["fhasta"]=date("Y-m-d");
+        $newdata = [
+            'buscar'  => "",
+            'fdesde'     => date("Y-m-d"),
+            'fhasta' => date("Y-m-d")
+        ];        
+        $session->set_userdata($newdata);
         $this->load->view('encabezado.php');
         $this->load->view('menu.php');      
         $this->load->view('ventas/facturas.php',$data);

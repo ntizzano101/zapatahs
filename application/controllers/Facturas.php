@@ -151,7 +151,23 @@ class Facturas extends CI_Controller {
                 }elseif ($prM < 1 || $prM > 12){
                     $error->periva="El mes es incorrecto";$falla=true;
                 }elseif ($prA < date("Y") || ($prA == date("Y") && $prM < date("m") )  ){
-                    $error->periva="El período no puede ser menor al mes/año actual";$falla=true;
+                    if(date('m')==1 and in_array($prM,array(1,11,12))){
+                        if($prM==1 and $prA<>date("Y"))    
+                             { $error->periva="El período no puede ser menor al mes/año actual(-2 meses)";$falla=true;}  
+                        elseif($prM>1 and $prA!=date("Y")-1)    
+                            { $error->periva="El período no puede ser menor al mes/año actual(-2 meses)";$falla=true;}       
+                        else {$falla=false;}  
+                    }
+                    elseif(date('m')==2 and in_array($prM,array(2,1,12))){
+                         if($prM<=2 and $prA<>date("Y"))    
+                                { $error->periva="El período no puede ser menor al mes/año actual(-2 meses)";$falla=true;}  
+                         elseif($prM==12 and $prA!=date("Y")-1){$error->periva="El período no puede ser menor al mes/año actual(-2 meses)";$falla=true;} 
+                         else {$falla=false;}  
+                    }
+                    elseif(date('m')>2 and date('Y')==$prA and in_array($prM,array(date('m'),date('m')-1,date('m')-2))){$falla=false;}
+                    else{
+                    $error->periva="El período no puede ser menor al mes/año actual(-2 meses)";$falla=true;
+                    }
                 }
             }
         }
