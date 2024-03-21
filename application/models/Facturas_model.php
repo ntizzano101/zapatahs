@@ -135,8 +135,9 @@ class Facturas_model extends CI_Model {
         return $retorno;
         }       
     public function control_numeracion($obj){
-        $sql="select letra from facturas where id_empresa=? and puerto=? and numero=? and id_tipo_comp=? limit 1";
-        $retorno=$this->db->query($sql, array($obj->empresa,$obj->factnro1,$obj->factnro2,$obj->cod_afip))->row();
+        $sql="select letra from facturas where id_empresa=? and puerto=?  and numero=? and id_tipo_comp=? and id_proveedor=? limit 1";
+        $retorno=$this->db->query($sql, array($obj->empresa,$obj->factnro1,$obj->factnro2,$obj->cod_afip,$obj->proveedor))->row();
+        
         return $retorno;
     }
     public function guardar($obj)

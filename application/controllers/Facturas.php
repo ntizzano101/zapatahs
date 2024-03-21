@@ -136,7 +136,7 @@ class Facturas extends CI_Controller {
         if( !(is_numeric($obj->factnro1))){$error->factnro="Deben ser un número";$falla=true;}
         if( !(is_numeric($obj->factnro2))){$error->factnro="Deben ser un número";$falla=true;}
         $res=$this->facturas_model->control_numeracion($obj);
-        if(!$res==''){$error->factnro="el nro de comprobante ya existe";$falla=true;}        
+        if(!empty($res)){$error->factnro="el nro de comprobante ya existe";$falla=true;}        
         ##Validar
         if($obj->fecha==""){$error->fecha="No puede estar vacío";$falla=true;}
         if($obj->periva==""){
