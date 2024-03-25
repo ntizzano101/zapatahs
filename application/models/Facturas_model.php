@@ -338,7 +338,7 @@ class Facturas_model extends CI_Model {
             $opago->pago=new stdClass();
             $opago->cab->id=Null;
             $opago->cab->id_cliente=Null;
-            $opago->cab->fecha=date("Y-m-d");
+            $opago->cab->fecha=$obj->fecha;
             $opago->cab->total=$total;
             $opago->cab->id_proveedor=$obj->proveedor;
             $opago->factura->id=Null;
