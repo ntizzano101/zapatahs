@@ -274,7 +274,7 @@ class Facturas_model extends CI_Model {
                                     $iva105=$iva105+($x->prcu * $x->cant)*0.105;}
                     if($x->iva==27){$neto27=$neto27+$x->prcu * $x->cant; 
                                         $iva27=$iva27+($x->prcu * $x->cant)*0.27;}
-                    if($x->iva==0){$neto0=$neto0+$x->prcu * $x->cant; }
+                    if($x->iva==0 && $x->tipo=="I"){$neto0=$neto0+$x->prcu * $x->cant; }
                      
                      if($x->tipo=="E"){$exento=$exento+$x->prcu * $x->cant;} 
 

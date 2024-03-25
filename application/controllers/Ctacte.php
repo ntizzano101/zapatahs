@@ -292,7 +292,7 @@ public function ingreso_pago_otro(){
         foreach($filas as $fa){           
             $f=explode("_",$fa);
             //0->id comprobante //1->saldo adeudado //2-> es lo pagado
-            if(abs($f[1]) < abs($f[2])){$data->rta="no puede ingresar las que el saldo";}
+            if(abs($f[1]) < abs($f[2])){$data->rta="no puede ingresar a pagar mas que el saldo ";}
             $tpagado+=$f[2];    
             $factura = new stdClass();   
             $factura->id=0;
@@ -302,7 +302,7 @@ public function ingreso_pago_otro(){
             $pago->facturas[]=$factura;
         }               
         //controlo que el total cancelando coincida
-        if($tpagado!=$total_fin){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos" . $total_fin;}
+        if($tpagado!=$total_fin){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos " . $total_fin;}
         if($opagofecha==""){$data->rta="La Fecha de la OP no puede ser vacia";}                          
         if($data->rta==""){                      
             $opago = new stdClass();   

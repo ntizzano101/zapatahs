@@ -240,7 +240,21 @@ class Ajax extends CI_Controller {
         $resp=json_decode(json_encode($data), true);
         $this->send($resp);       
     }
+    public function busca_comp_asoc(){
+        $id=$this->input->post('id');
+        $cliente=$this->input->post('cliente');    
+        $this->load->model('ventas_model');               
+        $rta=$this->ventas_model->busca_comp_asoc($cliente,$id);
+        $combo='<option value="">NINGUNO</option>';
+        foreach($rta as $r){
+            $combo.='<option value="'.$r->id_factura.'">'.$r->mostrar.'</option>';
+        }
+        $data = new stdClass();
+        $data->combo=$combo;   
+        $resp=json_decode(json_encode($data), true);
+        $this->send($resp);     
 
+    }
     public function busca_puertos() {
          $id=$this->input->post('id');
          $empresa=$this->input->post('empresa');         
@@ -375,5 +389,53 @@ class Ajax extends CI_Controller {
   $this->send($resp);     
 
    } 
+
+  public function traerItems(){
+     $idf=   $items=$this->input->post('id');     
+     $idc=   $items=$this->input->post('cliente');     
+     $this->load->model('ventas_model');                
+     $rta=$this->ventas_model->traigo_items_mod($idf);  
+     $m="";
+     foreach($rta as $j){
+         $m.='<input type="text" maxlenght="50"  name="item_valor[]"  class="form-control" value="'.$j->articulo.'" >
+         <input type="hidden" maxlenght="50"  name="item_id[]" value="'.$j->id.'" >
+         <br>';
+     }     
+     $data = new stdClass();
+     $data->mensaje="";       
+     $data->nombre=""; 
+     $data->items=""; 
+     if(empty($rta)){
+        $data->mensaje="NO HAY ITEMS PARA MODIFICAR"; }
+     else{
+     $data->nombre= $rta[0]->cliente . " Comprobante Letra:" . $rta[0]->letra . " Cod:" . $rta[0]->cod_afip
+     . " Puerto:" . $rta[0]->puerto . " Nro:".$rta[0]->numero  ;     
+     $data->items=$m;
+     }
+     $resp=json_decode(json_encode($data), true);
+     $this->send($resp);        
+
+  }
+  public function cambioItems(){
+    $id=   $items=$this->input->post('id');     
+    $items=   $items=$this->input->post('items');        
+    $data = new stdClass();
+    $data->mensaje="";       
+    $data->nombre=""; 
+    $data->items=array();  
+    foreach($id as $k=>$v){     
+        $update  = new stdClass();
+        $update->id=$v;
+        $update->articulo=$items[$k];
+        $data->items[]=$update;
+    }   
+    $this->load->model('ventas_model');                
+    $rta=$this->ventas_model->guardo_items_mod($data->items);         
+    if(!empty($rta)){
+       $data->mensaje="ERROR"; }    
+    $resp=json_decode(json_encode($data), true);
+    $this->send($resp);        
+
+ }
 
 }

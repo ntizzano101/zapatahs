@@ -72,6 +72,10 @@
                                         &nbsp; &nbsp;
                                         <a class="btn-default fa fa-eraser" title="Borrar" 
                                            onclick="verBorrar(<?=$fact->id?>, '<?=$fact->cliente?>')" >  
+                                        </a>    
+                                        &nbsp; &nbsp;
+                                        <a class="btn-default fa fa-edit" title="Modificar Items" 
+                                           onclick="verModi(<?=$fact->id?>, '<?=$fact->cliente?>')" >  
                                         </a>                                              
                                         </td>                                         
                                      
@@ -149,6 +153,41 @@
     </div>    
     <!MODALS !>
     <!MODALS !>
+    <div class="modal fade" id="mdlCambioItems">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title">Modificar items de Factura</h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <label id="msjNumeracion"></label>                           
+                    </div>
+                </div>
+                <div class="row">
+                        <label for="itemCod" id="TituloFactura">Modifique Las Descripciones</label>                                                                        
+                        <input type="hidden" name="" value="" id="id_factura" class="form-control"/> 
+                        <div id="idItemsModif">
+                        </div>    
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="bntCambioItems">Aceptar</button>
+            </div>
+
+          </div>
+        </div>
+    </div>    
+    <!MODALS !>
+    <!MODALS !>
     <div class="modal fade" id="mdlError">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -205,7 +244,24 @@ $(document).ready(function(){
               $("#mdlCambioNro").modal("hide");
             }
         });           
+    });                   
+    $("#bntCambioItems").click(function(){                
+        var a= new Array();
+        var b= new Array();
+        $('input[name^="item_valor"]').each(function() {
+            b.push($(this).val());            
+        });                 
+        $('input[name^="item_id"]').each(function() {
+            a.push($(this).val());            
+        });                 
+        $.post(CFG.url + 'Ajax/cambioItems/',
+        {   id:a,
+            items:b},
+        function(data){                                                   
+            $("#mdlCambioItems").modal("hide");            
+        });           
     });               
+
 
 });
 
@@ -235,20 +291,21 @@ function verBorrar(id,cliente){
             }
         );
     } 
- /*   function validar_nro(){
-    $.post(CFG.url + 'Ajax/validarnro/',
-        {id:$("#id_factura").val(),
-        numero:$("#nuevonro").val()},
-        function(data){  
+   function verModi(idFac,idCli){
+    $.post(CFG.url + 'Ajax/traerItems/',
+        {id:idFac,
+        cliente:idCli},
+        function(data){              
             if(data.mensaje!=""){
                 $("#msjError").html(data.mensaje);                
                 $("#mdlError").modal("show");
            }
            else{       
-              $("#nuevonro").val(data.numero);      
-              $("#mdlCambioNro").modal("show");
+              $("#idItemsModif").html(data.items);  
+              $("#TituloFactura").html(data.nombre) ;   
+              $("#mdlCambioItems").modal("show");
             }
         });
     } 
-    */
+
 </script>

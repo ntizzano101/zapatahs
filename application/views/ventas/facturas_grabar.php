@@ -577,18 +577,24 @@ $(document).ready(function(){
             
     });
 
-    $("#cod_afip").change(function(){
+    $("#cod_afip").change(function(){        
         $("#factnro1").html("");   
         $.post(CFG.url + 'Ajax/busca_puertos/',
             {id:$(this).val(),empresa:$("#empresa").val()},
             function(data){                                  
                 $("#factnro1").html(data.combo);              
-            });       
+         });     
+         $.post(CFG.url + 'Ajax/busca_comp_asoc/',
+            {id:$(this).val(),cliente:$("#cliente").val()},       
+             function(data){                                                                                                            
+                $("#id_comp_asoc").html(data.combo);              
+         });       
+
     });
 
 
-    
-    //$('#factnro1').keyup(function(){ $("#errFactnro").html("");});
+
+
     $('#factnro2').keyup(function(){ $("#errFactnro").html("");});
     $('#fecha').keyup(function(){ $("#errFecha").html("");});
     $('#fecha').change(function(){ $("#errFecha").html("");});

@@ -405,5 +405,35 @@ class Ventas_model extends CI_Model {
         $sql="update  facturas set numero=? where id_factura=?";
          $this->db->query($sql, array($nro,$id));
     }
+
+    public function traigo_items_mod($idf){
+        $sql="select i.id, i.articulo, c.cliente, f.puerto , f.numero,f.letra,f.cod_afip 
+        from 
+        facturas f inner join factura_items i on f.id_factura=i.id_factura 
+        inner join clientes c on c.id=f.id_cliente where f.id_factura=?";
+         $rr=$this->db->query($sql, array($idf));        
+         return $rr->result();
+    }
+    public function busca_comp_asoc($cliente,$id){
+        $rta=$this->db->query("select cod_afip from cod_afip where id=?",$id)->result();
+        $v=$rta[0]->cod_afip;
+        $r="(0)";
+        if($v==3){$r="(1,2)";}    
+        if($v==13){$r="(11,12)";}            
+        if($v==203){$r="(201,202)";}        
+        $sql="select concat(DATE_FORMAT(fecha, '%d/%m/%Y'),' Nro',numero,' $',total) as mostrar,id_factura
+        from facturas where id_cliente=? and cod_afip in $r order by fecha desc limit 15";       
+        $rta=$this->db->query($sql,$cliente)->result();       
+        return($rta)    ;
+
+    }
+    
+    public function guardo_items_mod($i){       
+        foreach($i as $it){
+        $sql="update factura_items set articulo=? where id=?";
+           $this->db->query($sql, array($it->articulo,$it->id));       
+        } 
+       return "";
+    }
  }
 ?>

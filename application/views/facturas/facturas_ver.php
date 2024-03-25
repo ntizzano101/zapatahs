@@ -222,7 +222,7 @@
                                 value="<?=$factura->per_stafe?>" disabled/>
                             <br>
                             
-                            <label for="intImpExto">Importe excento</label>
+                            <label for="intImpExto">Importe Exento</label>
                             <input type="text" name="intImpExto" id="intImpExto" class="form-control"
                                 value="<?=$factura->excento?>" disabled/>
                             <br>

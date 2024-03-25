@@ -47,7 +47,7 @@
                                     <td><?=number_format($cta->total,2,".",",")?></td>
                                     <input type="hidden" name="compr[<?=$i?>][id_comp]" value="<?=$cta->id_factura?>">
                                     <input type="hidden" name="compr[<?=$i?>][saldo]" value="<?=$cta->saldo?>">
-                                    <td align="right"><input style="text-align:right" type="text"  name="compr[<?=$i?>][paga]" value="<?=$cta->saldo;?>"></td>
+                                    <td align="right"><input style="text-align:right" type="text" onChange="actualizar()"  name="compr[<?=$i?>][paga]" value="<?=$cta->saldo;?>"></td>
                                 </tr>
                         <?php	
                          $i++;
@@ -55,7 +55,7 @@
                         ?>
                          <tr>
                                     <td colspan="3">Total Adeudado</td>                                    
-                                    <td align="right"><?=number_format($total,2,".",",")?></td>
+                                    <td align="right" id="mostrar_deudor"><?=number_format($total,2,".",",")?></td>
                                     <input type="hidden" id="deudor" value="<?=$total?>">                                                                                                
                                     <input type="hidden" id="cantcomp" name="cantcomp" value="<?=$i?>">
                                 </tr>
@@ -97,7 +97,7 @@
                  <label for="itemPrcU">Fecha de La Orden De Pago</label>
                 </td>
                 <td>
-                          <input type="date" name="itemPrcU" id="opagofecha" class="form-control"/> 
+                          <input type="date" name="itemPrcU" value="<?=date('Y-m-d')?>"id="opagofecha" class="form-control"/> 
                 </td>
                  </tr>
                  
@@ -291,6 +291,22 @@ var CFG = {
         });
         recalcular();    
     });
+    function actualizar(){
+            total=0.00;
+           for(i=0;i<$("#cantcomp").val();i++){            
+            if(isNaN($("input[name='compr["+i+"][paga]']").val())){
+                $("input[name='compr["+i+"][paga]']").val("0.00");
+            }
+            if($("input[name='compr["+i+"][paga]']").val()==''){
+                $("input[name='compr["+i+"][paga]']").val("0.00");
+            }
+            
+                   total=total+parseFloat($("input[name='compr["+i+"][paga]']").val());        
+          
+           } 
+          $("#mostrar_deudor").html(total);
+    }
+
     function recalcular(){
         $.post(CFG.url + 'ctacte/recalcular/',
             {id_aux:$("#id_pago_aux").val()},
