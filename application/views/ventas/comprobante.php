@@ -180,7 +180,7 @@ font-size:small;
 							//fecha 	full-date (RFC3339) 	OBLIGATORIO – Fecha de emisión del comprobante 	"2020-10-13"
 							$qr1["fecha"]=$venta->fecha;
 							//cuit 	Numérico 11 dígitos 	OBLIGATORIO – Cuit del Emisor del comprobante 	30000000007
-							$qr1["cuit"]=$empresa->cuit;
+							$qr1["cuit"]=(float)$empresa->cuit;
 							//ptoVta 	Numérico hasta 5 digitos 	OBLIGATORIO – Punto de venta utilizado para emitir el comprobante 	10
 							$qr1["ptoVta"]=(int)$venta->puerto; //Sori Pero lo tengo HArdoce DAMASO;
 							//tipoCmp 	Numérico hasta 3 dígitos 	OBLIGATORIO – tipo de comprobante (según Tablas del sistema ) 	1
@@ -198,11 +198,11 @@ font-size:small;
 							//nroDocRec 	Numérico hasta 20 dígitos 	DE CORRESPONDER – Número de documento del receptor correspondiente al tipo de documento indicado 	20000000001
 							if($cliente->iva != 5)
 								{ 
-								$qr1["nroDocRec"]=$cliente->cuit;
+								$qr1["nroDocRec"]=(float)$cliente->cuit;
 								$qr1["tipoDocRec"]=80;
 								}
 							else{
-								$qr1["nroDocRec"]=$cliente->dni;	
+								$qr1["nroDocRec"]=(float)$cliente->dni;	
 								$qr1["tipoDocRec"]=96;
 								}
 							//tipoCodAut 	string 	OBLIGATORIO – “A” para comprobante autorizado por CAEA, “E” para comprobante autorizado por CAE 	"E"
