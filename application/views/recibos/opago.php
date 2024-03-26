@@ -320,7 +320,7 @@ var CFG = {
                    total=total+parseFloat($("input[name='compr["+i+"][paga]']").val());        
           
            } 
-          $("#mostrar_deudor").html(total);
+           $("#mostrar_deudor").html(total.toFixed(2));
     }
     function guardar(){
         var cancela='';
