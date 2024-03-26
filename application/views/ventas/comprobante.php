@@ -198,7 +198,7 @@ font-size:small;
 							//nroDocRec 	Numérico hasta 20 dígitos 	DE CORRESPONDER – Número de documento del receptor correspondiente al tipo de documento indicado 	20000000001
 							if($cliente->iva != 5)
 								{ 
-								$qr1["nroDocRec"]=(float)$cliente->cuit;
+								$qr1["nroDocRec"]=(float) str_replace("-","",$cliente->cuit);
 								$qr1["tipoDocRec"]=80;
 								}
 							else{
