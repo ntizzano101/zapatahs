@@ -182,13 +182,13 @@ font-size:small;
 							//cuit 	Numérico 11 dígitos 	OBLIGATORIO – Cuit del Emisor del comprobante 	30000000007
 							$qr1["cuit"]=$empresa->cuit;
 							//ptoVta 	Numérico hasta 5 digitos 	OBLIGATORIO – Punto de venta utilizado para emitir el comprobante 	10
-							$qr1["ptoVta"]=$venta->puerto; //Sori Pero lo tengo HArdoce DAMASO;
+							$qr1["ptoVta"]=(int)$venta->puerto; //Sori Pero lo tengo HArdoce DAMASO;
 							//tipoCmp 	Numérico hasta 3 dígitos 	OBLIGATORIO – tipo de comprobante (según Tablas del sistema ) 	1
-							$qr1["tipoCmp"]=$venta->cod_afip;
+							$qr1["tipoCmp"]=(int)$venta->cod_afip;
 							//nroCmp 	Numérico hasta 8 dígitos 	OBLIGATORIO – Número del comprobante 	94
-							$qr1["nroCmp"]=$venta->numero;
+							$qr1["nroCmp"]=(int)$venta->numero;
 							//importe 	Decimal hasta 13 enteros y 2 decimales 	OBLIGATORIO – Importe Total del comprobante (en la moneda en la que fue emitido) 	12100
-							$qr1["importe"]=$venta->total;
+							$qr1["importe"]=(float)$venta->total;
 							//moneda 	3 caracteres 	OBLIGATORIO – Moneda del comprobante (según Tablas del sistema ) 	"DOL"
 							$qr1["moneda"]="PES";
 							//ctz 	Decimal hasta 13 enteros y 6 decimales 	OBLIGATORIO – Cotización en pesos argentinos de la moneda utilizada (1 cuando la moneda sea pesos) 	65
@@ -208,7 +208,7 @@ font-size:small;
 							//tipoCodAut 	string 	OBLIGATORIO – “A” para comprobante autorizado por CAEA, “E” para comprobante autorizado por CAE 	"E"
 							$qr1["tipoCodAut"]="E";	
 							//codAut 	Numérico 14 dígitos 	OBLIGATORIO – Código de autorización otorgado por AFIP para el comprobante 	70417054367476
-							$qr1["codAut"]=$venta->cae;
+							$qr1["codAut"]=(float)$venta->cae;
 							$valor=json_encode($qr1);
 							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);
 							?>
