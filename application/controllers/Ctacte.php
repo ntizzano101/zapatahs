@@ -285,7 +285,7 @@ public function ingreso_pago_otro(){
         $compro=$this->input->post('compro');        
         $id_proveedor=$this->input->post('id_proveedor');      
         $opagofecha=$this->input->post('opagofecha');      
-        $total_fin=$this->input->post('total_fin');      
+        $total_fin=(float) $this->input->post('total_fin');      
         $filas=explode(";",$compro);        
         $tpagado=0;
         //controlo cada factura
@@ -293,14 +293,15 @@ public function ingreso_pago_otro(){
             $f=explode("_",$fa);
             //0->id comprobante //1->saldo adeudado //2-> es lo pagado
             if(abs($f[1]) < abs($f[2])){$data->rta="no puede ingresar a pagar mas que el saldo ";}
-            $tpagado+=$f[2];    
+            $tpagado+=(float) $f[2];    
             $factura = new stdClass();   
             $factura->id=0;
             $factura->id_op=0;
             $factura->id_factura=$f[0];
             $factura->monto=$f[2];
             $pago->facturas[]=$factura;
-        }               
+        }  
+        $tpagado=round($tpagado,2);             
         //controlo que el total cancelando coincida
         if($tpagado!=$total_fin){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos " . $total_fin;}
         if($opagofecha==""){$data->rta="La Fecha de la OP no puede ser vacia";}                          
