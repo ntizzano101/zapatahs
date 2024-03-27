@@ -153,8 +153,7 @@ class Facturas_model extends CI_Model {
                 if(!(is_numeric($obj->intImpExto))){$obj->intImpExto="0.00";}
                 if(!(is_numeric($obj->intConNoGrv))){$obj->intConNoGrv="0.00";}
                 if(!(is_numeric($obj->intTotal))){$obj->intTotal="0.00";}        
-                list($ano,$mes,$dia)= explode("-", $obj->fecha);                
-                $obj->periva=$ano.$mes;
+                list($ano,$mes,$dia)= explode("-", $obj->fecha);                                
                 $items=json_decode($obj->items);          
                 //guardo encabezado          
                 $sql="INSERT INTO facturas(
@@ -447,6 +446,13 @@ class Facturas_model extends CI_Model {
             " WHERE a.id_factura=?";
         $retorno=$this->db->query($sql, array($id))->result();
         return $retorno;
-        }       
+        } 
+    public function periva($id,$periva)
+        {
+        $sql="update facturas set periodo_iva=? where id_factura=?";
+        $retorno=$this->db->query($sql, array($periva,$id))->result();      
+        return $retorno;
+           
+    }         
 }
 ?>

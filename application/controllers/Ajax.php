@@ -338,6 +338,30 @@ class Ajax extends CI_Controller {
                 $this->send($resp);        
     
 }
+public function periva() {
+    $periva=$this->input->post('periva');  
+    $error="";
+    $falla=false;  
+    if(strpos($periva, "/")===false){
+        $error="El separador debe ser /";$falla=true;
+    }else{
+        list($prM,$prA)= explode("/", $periva);
+        if (!(is_numeric($prA))){
+            $error="El separador debe ser /";$falla=true;
+        }elseif ($prM < 1 || $prM > 12){ $error="Mes Incorrecto";$falla=true;}
+        elseif ($prA < 2019 || $prA > 2050){ $error="Año Incorrecto";$falla=true;}
+     }
+    
+    $data = new stdClass();       
+    $data->rta="Guardado!!";
+    $data->periva=$periva;
+    if($falla===true){
+        $data->rta=$error;        
+    } 
+    $resp=json_decode(json_encode($data), true);
+    $this->send($resp);        
+
+}
 
    private function send($array) {
 

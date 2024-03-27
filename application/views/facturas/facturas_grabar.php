@@ -93,7 +93,7 @@
                                     
                                 <label for="periva">Período de IVA</label>
                                 <input type="text" name="periva" id="periva" class="form-control"
-                                    value="<?=$factura->periva?>"   placeholder="mm/yyyy"/>   
+                                    value="<?=$factura->periva?>"   placeholder="mm/yyyy"/>                                
                                 <div id="errPeriva">
                                     <small><font color="red">
                                         <?php if (isset($error->periva)){echo $error->periva;}?> 

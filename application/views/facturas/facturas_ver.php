@@ -58,9 +58,14 @@
                                 
                                 <br>    
                                     
-                                <label for="per_iva">Período de IVA</label>
+                                <label for="per_iva"><a href="#" title="Cambiar"  id="CambiaPerIva" > Período de IVA 
+                                </a>
+                                </label>            
+
                                 <input type="text" name="per_iva" id="periva" class="form-control"
-                                       value="<?=$factura->pi_mes?>/<?=$factura->pi_anio?>" disabled/>   
+                                       value="<?=$factura->pi_mes?>/<?=$factura->pi_anio?>" 
+                                       placeholder="mm/yyyy"  disabled/>   
+                                  
                                 <br>      
                                 
                                 <label for="cod_afip">Tipo de comprobante</label>
@@ -276,14 +281,24 @@ $(document).ready(function(){
         $('input:hidden[name="token"]').val(result.token);
         $.ajaxSetup({data: {token: result.token}});  
     
+       
+
+        })
     });
     
     ///tablita de ivas
-
-
-
-});         
-        
+    $("#CambiaPerIva").click(function(){
+        $("#periva").removeAttr('disabled');  
+    });         
+    $("#periva").change(function(){
+        $("#periva").attr('disabled','disabled');
+        $.post(CFG.url + 'Ajax/periva/',        
+            {periva:$("#periva").val(),
+            id:<?=$factura->id_factura?>},
+            function(data){ 
+                alert(data.rta);            
+            });   
+    });             
 
 $.post(CFG.url + 'Ajax/tablitaIva/',
             {items:$("#items").val()},

@@ -171,7 +171,7 @@ class Facturas extends CI_Controller {
                 }
             }
         }
-        
+        $obj->periva=$prA.$prM;
         if($obj->cod_afip==""){$error->cod_afip="No puede estar vacío";$falla=true;}
         if($obj->formaPago==""){$error->formaPago="No puede estar vacío";$falla=true;}
         if(!(is_numeric($obj->intImpNeto))){$error->intImpNeto="Debe ser un número";$falla=true;}
