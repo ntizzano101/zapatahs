@@ -91,6 +91,7 @@ font-size:small;
 			<td  style="border:1px solid #000" colspan="4">Descripcion</td>	
 		<?php }  ?>
 		<?php if($venta->cae=="" or $venta->cae=="MIGRACION" ){echo "<tr><td colspan=5><h1>Comprobante de migarcion no Valido</h1></td></tr>";} ?>			
+		<?php if($venta->cae=="" or $venta->cae=="MANUAL" ){echo "<tr><td colspan=5><h1>NO VALIDO COMO FACTURA,ES UNA COPIA</h1></td></tr>";} ?>			
 		<?php foreach ($items as $it) { 
 			if($venta->letra!='R') {?>
 			<tr>		

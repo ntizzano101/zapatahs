@@ -72,7 +72,7 @@ class Ventas_model extends CI_Model {
             $sql="SELECT a.id_factura AS id".
                 ", DATE_FORMAT(a.fecha, '%d/%m/%Y') AS fecha".
                 ", b.cliente".
-                ", a.puerto,a.numero,a.total,a.codigo_comp,a.letra,c.nombre,e.datos,ca.id_tipo_comp,a.id_comp_asoc".
+                ", a.puerto,a.numero,a.total,a.codigo_comp,a.letra,c.nombre,e.datos,ca.id_tipo_comp,a.cae,a.id_comp_asoc".
                 " FROM facturas a".
                 " INNER JOIN clientes b ON a.id_cliente=b.id".
                 " INNER JOIN empresas e ON a.id_empresa=e.id_empresa".
@@ -346,17 +346,15 @@ class Ventas_model extends CI_Model {
         //   print_r($mtz);die;    
         $this->db->query($sql,$mtz);
         //Esto Solo Para NO ELECTRONICO
-        $query = $this->db->get_where('facturas', array('id_factura' => $last_id));
+        $query = $this->db->query('select facturas.*,puertos.tipo from facturas inner join puertos
+        on facturas.puerto=puertos.puerto and facturas.cod_afip=puertos.cod_afip where id_factura=?',$last_id);        
         $a=$query->result();    
-        if(in_array($a[0]->letra,array('A','B'))){
-                //dejo el numero en cero porque lo tiene que resolver Afip
-                
-
-
+        if($a[0]->tipo=='E' and in_array($a[0]->letra,array('A','B','C'))){
+                //dejo el numero en cero porque lo tiene que resolver Afip                
             }
             else
             {    
-            $sql="select max(numero) as ultimo from facturas where puerto=".$obj->factnro1." and cod_afip=(SELECT cod_afip from cod_afip where id=".$obj->cod_afip.")";
+            $sql="select max(numero) as ultimo from facturas where puerto=".$obj->factnro1." and cod_afip=(SELECT cod_afip from cod_afip where id=".$obj->cod_afip.") and id_cliente >0";
             $rta=$this->db->query($sql)->result();        
             $ultimo1=$rta[0]->ultimo;  
             if($ultimo1==0){    
@@ -364,8 +362,10 @@ class Ventas_model extends CI_Model {
                 $a=$rta->result();
                 $ultimo1=$a[0]->ultimo;
                 $ultimo1=$ultimo1+1;            
-                }                
-            $this->db->query("UPDATE facturas set numero=".$ultimo1." where id_factura=".$last_id);        
+                }  
+            $manual="";    
+            if($a[0]->tipo=='M' and in_array($a[0]->letra,array('A','B','C'))){$manual=" cae= 'MANUAL',";}
+            $this->db->query("UPDATE facturas set ".$manual." numero=".$ultimo1." where id_factura=".$last_id);        
             return($ultimo1);
             }
 
@@ -390,7 +390,10 @@ class Ventas_model extends CI_Model {
                 case "A":
                 case "B":
                 case "C":
-                    if($row->cae!=""){$mensaje="factura electronica pasada por afip no se puede borrar";}
+                    if($row->cae!=""){
+                        if ($row->cae=="MIGRACION"){$mensaje="Comprobante Migrado no puede Borrarse";}
+                        if (is_numeric($row->cae)){$mensaje="Comprobante Pasado por Afip,No puede Borrarse";}
+                    }
                     break;
                 case "P":
                 case "X":

@@ -55,7 +55,14 @@
                                     <td><?=$fact->datos ?></td>
                                     <td><?=$fact->cliente ?></td>
                                     <td><?=$fact->fecha ?></td>                                    
-                                    <td><a href="#" id="renglon<?=$fact->id?>" onClick=""><?php echo $fact->nombre . " " .  str_pad($fact->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($fact->numero,8,"0",STR_PAD_LEFT) ;  ?></a></td>                                    
+                                    <?php 
+                                    //solo permitimos modificar carga manual de  facturas 
+                                    if($fact->cae=="MANUAL" and in_array($fact->letra,array("A","B","C"))){?>
+                                    <td><a href="#" id="renglon<?=$fact->id?>"  onClick="modificar_nro(<?=$fact->id?>)"><?php echo $fact->nombre . " " .  str_pad($fact->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($fact->numero,8,"0",STR_PAD_LEFT) ;  ?></a></td>                                    
+                                    <?php } 
+                                    else { ?>
+                                         <td><?php echo $fact->nombre . " " .  str_pad($fact->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($fact->numero,8,"0",STR_PAD_LEFT) ;  ?></td>                                        
+                                    <?php }?>    
                                     <td align="right"><?php printf("$ %0.2f", $fact->total * $mult) ?></td>
                                     <td>
                                         <a class="btn-default fa fa-eye" title="Ver Comprobante" 
