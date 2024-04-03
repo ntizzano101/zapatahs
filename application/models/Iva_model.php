@@ -195,11 +195,12 @@ class Iva_model extends CI_Model {
 
     //debito fiscal 
     //ventas 
-    $sql1="select sum(iva) as iva from facturas where periodo_iva=? and id_cliente > 0 ";    
+    $sql1="select sum(case when tipo_comp=3 then -1*iva else iva end) as iva from facturas where periodo_iva=? and id_cliente > 0 ";    
     //Credito Fiscal
     //FACTURAS compras  
     $sql2="select sum(monto) as iva from opago_pago where rete_fecha >= ? and rete_fecha < ? and id_medio_pago=3";
-    $sql3="select sum(iva) as iva ,sum(per_iva) as per_iva from facturas where periodo_iva = ? and id_proveedor > 0 ";
+    $sql3="select sum(case when tipo_comp=3 then -1*iva else iva end) as iva,
+    sum(case when tipo_comp=3 then -1*per_iva else per_iva end) as  per_iva from facturas where periodo_iva = ? and id_proveedor > 0 ";
     $retorno1=$this->db->query($sql1, array($peri))->result();
     $retorno2=$this->db->query($sql2, array($f1,$f2))->result();
     $retorno3=$this->db->query($sql3, array($peri))->result();
