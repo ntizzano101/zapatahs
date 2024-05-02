@@ -300,7 +300,7 @@ public function ingreso_pago_otro(){
             $factura->id_factura=$f[0];
             $factura->monto=$f[2];
             $pago->facturas[]=$factura;
-        }  
+        } 
         $tpagado=round($tpagado,2);             
         //controlo que el total cancelando coincida
         if($tpagado!=$total_fin){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos " . $total_fin;}

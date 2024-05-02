@@ -244,6 +244,11 @@ class Ventas extends CI_Controller {
         $this->load->view('ventas/comprobante.php',$data);
 
     }
+
+   
+
+
+  
     
 }  
 ?>

@@ -217,6 +217,190 @@ class Iva extends CI_Controller {
         exit(json_encode($send, JSON_FORCE_OBJECT));
 
     }
+    public function siap_compras($tipo,$piva){    
+        $this->load->model('iva_model');
+        $compro=$this->iva_model->siap_compras($piva);
+        $c="";$x="";
+        foreach($compro as $com){
+            $com->cuit=str_replace("-","",$com->cuit);
+            //loc Comp C entonces va exento no  nograba
+            if(in_array($com->codigo_comp,array(11,12,13))){
+                   $com->excento=0;
+                   //$com->excento+$com->con_nograv;
+                   $com->con_nograv=0; 
+            }
+            //Fecha Comp
+            $c.=$com->f2;
+            //tipo Comp
+            $c.=str_pad($com->codigo_comp,3,"0",STR_PAD_LEFT);
+            //puerto
+            $c.=str_pad($com->puerto,5,"0",STR_PAD_LEFT);
+            //numero
+            $c.=str_pad($com->numero,20,"0",STR_PAD_LEFT);
+            //despacho 
+            $c.=str_repeat(" ",16);
+            //tipo doc 80
+            $c.="80";
+            //nro doc 
+            $c.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
+            // Nombre
+            $c.=str_pad(substr($com->proveedor,0,30),30," ",STR_PAD_RIGHT);
+            //total
+            $c.=str_pad((int)$com->total*100,15,"0",STR_PAD_LEFT);
+            //nogra
+            $c.=str_pad((double)$com->con_nograv*100,15,"0",STR_PAD_LEFT);
+            //exento            
+            $c.=str_pad((int)$com->excento*100,15,"0",STR_PAD_LEFT);
+            //percepcion iva
+            $c.=str_pad((int)$com->per_iva*100,15,"0",STR_PAD_LEFT);
+            //percepcion ganancias
+            $c.=str_pad((int)$com->per_ganancia*100,15,"0",STR_PAD_LEFT);
+            //ingresos brutos
+            $c.=str_pad((int)$com->per_ing_bto*100,15,"0",STR_PAD_LEFT);
+            //municipales
+            $c.=str_repeat("0",15);
+            //impuestos internos
+            $c.=str_repeat("0",15);
+            //moneda
+            $c.="PES";
+            //cambio  4 ent 6 dec
+            $c.="0001000000";
+            //cant ivas
+            $cantIVa=0;
+            if($com->neto0<>0.00){$cantIVa++;}
+            if($com->neto105<>0.00){$cantIVa++;}
+            if($com->neto21<>0.00){$cantIVa++;}
+            if($com->neto27<>0.00){$cantIVa++;}
+            $c.=$cantIVa;
+            //Cod OPeracion
+            $c.=" ";
+            //credito fiscal comptable 
+            $c.=str_pad((int)$com->iva*100,15,"0",STR_PAD_LEFT);
+            //Otrostributos
+            $c.=str_repeat("0",15);
+            //cuit corredr
+            $c.=str_repeat("0",11);
+            //demonicacion corredor
+            $c.=str_repeat(" ",30);
+            //iva comision
+            $c.=str_repeat("0",15);
+            $c.=PHP_EOL;
+            ///Alicuotas  
+            if($com->iva0<>0.00) 
+            {
+                //tipo Comp
+                $x.=str_pad($com->codigo_comp,3,"0",STR_PAD_LEFT);    
+                //puerto
+                $x.=str_pad($com->puerto,5,"0",STR_PAD_LEFT);
+                //numero
+                $x.=str_pad($com->numero,20,"0",STR_PAD_LEFT);
+                //tipo doc 80    
+                $x.="80";
+                //nro doc 
+                $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
+                //neto
+                $x.=str_pad((int)$com->neto0*100,15,"0",STR_PAD_LEFT);
+                //Copdigo
+                $x.="0003";
+                //iva liquidado
+                $x.=str_pad($com->iva0*100,15,"0",STR_PAD_LEFT);
+                $x.=PHP_EOL;
+            }    
+            if($com->iva105<>0.00) 
+            {
+                //tipo Comp
+                $x.=str_pad($com->codigo_comp,3,"0",STR_PAD_LEFT);    
+                //puerto
+                $x.=str_pad($com->puerto,5,"0",STR_PAD_LEFT);
+                //numero
+                $x.=str_pad($com->numero,20,"0",STR_PAD_LEFT);
+                //tipo doc 80    
+                $x.="80";
+                //nro doc 
+                $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
+                //neto
+                $x.=str_pad((int)$com->neto105*100,15,"0",STR_PAD_LEFT);
+                //Copdigo
+                $x.="0004";
+                //iva liquidado
+                $x.=str_pad($com->iva105*100,15,"0",STR_PAD_LEFT);
+                $x.=PHP_EOL;
+            }    
+            if($com->iva21<>0.00) 
+            {
+                //tipo Comp
+                $x.=str_pad($com->codigo_comp,3,"0",STR_PAD_LEFT);    
+                //puerto
+                $x.=str_pad($com->puerto,5,"0",STR_PAD_LEFT);
+                //numero
+                $x.=str_pad($com->numero,20,"0",STR_PAD_LEFT);
+                //tipo doc 80    
+                $x.="80";
+                //nro doc 
+                $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
+                //neto
+                $x.=str_pad((int)$com->neto21*100,15,"0",STR_PAD_LEFT);
+                //Copdigo
+                $x.="0005";
+                //iva liquidado
+                $x.=str_pad($com->iva21*100,15,"0",STR_PAD_LEFT);
+                $x.=PHP_EOL;
+            }    
+            if($com->iva27<>0.00) 
+            {
+                //tipo Comp
+                $x.=str_pad($com->codigo_comp,3,"0",STR_PAD_LEFT);    
+                //puerto
+                $x.=str_pad($com->puerto,5,"0",STR_PAD_LEFT);
+                //numero
+                $x.=str_pad($com->numero,20,"0",STR_PAD_LEFT);
+                //tipo doc 80    
+                $x.="80";
+                //nro doc 
+                $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
+                //neto
+                $x.=str_pad((int)$com->neto27*100,15,"0",STR_PAD_LEFT);
+                //Copdigo
+                $x.="0003";
+                //iva liquidado
+                $x.=str_pad($com->iva27*100,15,"0",STR_PAD_LEFT);
+                $x.=PHP_EOL;
+            }    
+
+
+        }  
+            ////FIN IVA COMPRAS 
+            $rutaArchivo1 = __DIR__ ."/Compras_".$piva.".txt";
+            $rutaArchivo2 = __DIR__ ."/Compras_Ali_".$piva.".txt";           
+            file_put_contents($rutaArchivo1,$c);           
+            file_put_contents($rutaArchivo2,$x);                       
+            $defi=$rutaArchivo2;
+            if($tipo==1){
+                $defi=$rutaArchivo1;
+            }
+            ///
+            $nombreArchivo = basename($defi);
+
+            // Configurar las cabeceras para la descarga
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $nombreArchivo . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($defi));
+            
+            // Limpiar el búfer de salida
+            ob_clean();
+            flush();
+            
+            // Leer el archivo y enviarlo al navegador
+            readfile($defi);
+            exit;
+            ///
+
+    }
+
     
 }  
 ?>
