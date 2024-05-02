@@ -379,7 +379,7 @@ class Iva extends CI_Controller {
                 $defi=$rutaArchivo1;
             }
             ///
-            $nombreArchivo = basename($defi);
+            $nombreArchivo = $defi;
 
             // Configurar las cabeceras para la descarga
             header('Content-Description: File Transfer');
