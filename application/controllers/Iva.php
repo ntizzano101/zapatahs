@@ -246,17 +246,17 @@ class Iva extends CI_Controller {
             // Nombre
             $c.=str_pad(substr($com->proveedor,0,30),30," ",STR_PAD_RIGHT);
             //total
-            $c.=str_pad((int)$com->total*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->total*100,15,"0",STR_PAD_LEFT);
             //nogra
-            $c.=str_pad((double)$com->con_nograv*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->con_nograv*100,15,"0",STR_PAD_LEFT);
             //exento            
-            $c.=str_pad((int)$com->excento*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->excento*100,15,"0",STR_PAD_LEFT);
             //percepcion iva
-            $c.=str_pad((int)$com->per_iva*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->per_iva*100,15,"0",STR_PAD_LEFT);
             //percepcion ganancias
-            $c.=str_pad((int)$com->per_ganancia*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->per_ganancia*100,15,"0",STR_PAD_LEFT);
             //ingresos brutos
-            $c.=str_pad((int)$com->per_ing_bto*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->per_ing_bto*100,15,"0",STR_PAD_LEFT);
             //municipales
             $c.=str_repeat("0",15);
             //impuestos internos
@@ -275,7 +275,7 @@ class Iva extends CI_Controller {
             //Cod OPeracion
             $c.=" ";
             //credito fiscal comptable 
-            $c.=str_pad((int)$com->iva*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad($com->iva*100,15,"0",STR_PAD_LEFT);
             //Otrostributos
             $c.=str_repeat("0",15);
             //cuit corredr
@@ -299,11 +299,11 @@ class Iva extends CI_Controller {
                 //nro doc 
                 $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
                 //neto
-                $x.=str_pad((int)$com->neto0*100,15,"0",STR_PAD_LEFT);
+                $x.=str_pad($com->neto0*100,15,"0",STR_PAD_LEFT);
                 //Copdigo
                 $x.="0003";
                 //iva liquidado
-                $x.=str_pad($com->iva0*100,15,"0",STR_PAD_LEFT);
+                $x.=str_repeat("0",15);
                 $x.=PHP_EOL;
             }    
             if($com->iva105<>0.00) 
@@ -319,7 +319,7 @@ class Iva extends CI_Controller {
                 //nro doc 
                 $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
                 //neto
-                $x.=str_pad((int)$com->neto105*100,15,"0",STR_PAD_LEFT);
+                $x.=str_pad($com->neto105*100,15,"0",STR_PAD_LEFT);
                 //Copdigo
                 $x.="0004";
                 //iva liquidado
@@ -339,7 +339,7 @@ class Iva extends CI_Controller {
                 //nro doc 
                 $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
                 //neto
-                $x.=str_pad((int)$com->neto21*100,15,"0",STR_PAD_LEFT);
+                $x.=str_pad($com->neto21*100,15,"0",STR_PAD_LEFT);
                 //Copdigo
                 $x.="0005";
                 //iva liquidado
@@ -359,9 +359,9 @@ class Iva extends CI_Controller {
                 //nro doc 
                 $x.=str_pad($com->cuit,20,"0",STR_PAD_LEFT);
                 //neto
-                $x.=str_pad((int)$com->neto27*100,15,"0",STR_PAD_LEFT);
+                $x.=str_pad($com->neto27*100,15,"0",STR_PAD_LEFT);
                 //Copdigo
-                $x.="0003";
+                $x.="0006";
                 //iva liquidado
                 $x.=str_pad($com->iva27*100,15,"0",STR_PAD_LEFT);
                 $x.=PHP_EOL;
