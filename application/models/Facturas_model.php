@@ -253,16 +253,16 @@ class Facturas_model extends CI_Model {
                 //Ahora los items 
                 $neto21=0;
                 $neto105=0;
+                $neto0=0;
+                $neto27=0;
                 $iva21=0;
-                $iva105=0;
+                $iva27=0;                
+                $iva105=0;                
                 $exento=0;
                 $total=0;
                 $neto=0;
                 $iva=0;
-                $nogra=0;
-                $neto0=0;
-                $iva27=0;
-                $neto27=0;
+                $nogra=0;                           
                 foreach($items as $x){
                      if(is_numeric($x->iva)){$x->iva=$x->iva*100;$x->tipo="I";}
                      else{$x->tipo=$x->iva;$x->iva=0;}
@@ -309,8 +309,11 @@ class Facturas_model extends CI_Model {
                 excento=?,
                 iva21=?,
                 iva105=?,
+                iva27=?,
                 neto21=?,
                 neto105=?,
+                neto27=?,
+                neto0=?,
                 neto=?,
                 iva=?,
                 con_nograv=?      
@@ -320,8 +323,11 @@ class Facturas_model extends CI_Model {
                     $exento,
                     $iva21,
                     $iva105,
+                    $iva27,
                     $neto21,
                     $neto105,
+                    $neto27,
+                    $neto0,
                     $neto,
                     $iva,
                     $nogra,
