@@ -284,7 +284,7 @@ class Iva extends CI_Controller {
             $c.=str_repeat(" ",30);
             //iva comision
             $c.=str_repeat("0",15);
-            $c.=PHP_EOL;
+            $c.="\r\n";
             ///Alicuotas  
             if($com->iva0<>0.00) 
             {
@@ -304,7 +304,7 @@ class Iva extends CI_Controller {
                 $x.="0003";
                 //iva liquidado
                 $x.=str_repeat("0",15);
-                $x.=PHP_EOL;
+                $x.="\r\n";
             }    
             if($com->iva105<>0.00) 
             {
@@ -324,7 +324,7 @@ class Iva extends CI_Controller {
                 $x.="0004";
                 //iva liquidado
                 $x.=str_pad($com->iva105*100,15,"0",STR_PAD_LEFT);
-                $x.=PHP_EOL;
+                $x.="\r\n";
             }    
             if($com->iva21<>0.00) 
             {
@@ -344,7 +344,7 @@ class Iva extends CI_Controller {
                 $x.="0005";
                 //iva liquidado
                 $x.=str_pad($com->iva21*100,15,"0",STR_PAD_LEFT);
-                $x.=PHP_EOL;
+                $x.="\r\n";
             }    
             if($com->iva27<>0.00) 
             {
@@ -364,7 +364,7 @@ class Iva extends CI_Controller {
                 $x.="0006";
                 //iva liquidado
                 $x.=str_pad($com->iva27*100,15,"0",STR_PAD_LEFT);
-                $x.=PHP_EOL;
+                $x.="\r\n";
             }    
 
 
