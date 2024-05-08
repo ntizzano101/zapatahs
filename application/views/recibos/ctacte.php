@@ -22,7 +22,9 @@
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>recibos/opago/<?=$proveedor->id?>">Nuevo Recibo</a>
                     Fecha Desde<input type="date" class="form-control" name="fdesde" value="<?=$fdesde?>">
                     Fecha Hasta<input type="date" class="form-control" name="fhasta" value="<?=$fhasta?>">
-                    <button type="submit" class="btn btn-default">Buscar</button>		
+                    <button type="submit" class="btn btn-default">Buscar</button>
+                    <a href="<?php echo base_url(); ?>/recibos/exportar/<?=$proveedor->id?>/<?=$fdesde?>/<?=$fhasta?>/1" target="blank_" class="btn btn-default">Excel(.)</a>			
+                    <a href="<?php echo base_url(); ?>/recibos/exportar/<?=$proveedor->id?>/<?=$fdesde?>/<?=$fhasta?>/2" target="blank_" class="btn btn-default">Excel(,)</a>			
                     <br>
                 </div>
                 

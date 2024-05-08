@@ -146,5 +146,24 @@ public function ver_opago($id){
       where id_factura=?",array($id))->result();     
     return $rta;
     }
+  //CTA CTE   desde hasta
+  public function listado_2($id_prov,$f1,$f2)
+  {
+      $sql="SELECT DATE_FORMAT(op.fecha,'%d/%m/%Y') AS fecha,'O' as tt ,concat('Recibo N°',op.id) as descrip, op.id, op.total, 0 AS debe, op.total AS haber,op.fecha as fe_orden".
+          " FROM opago op".
+      " WHERE op.id_cliente=? and fecha between ? and ? ".	
+      " UNION".
+      " SELECT DATE_FORMAT(fac.fecha,'%d/%m/%Y') AS fecha,'F'  ,concat(fac.letra,' (',fac.codigo_comp,') ' , fac.puerto,' - ',fac.numero), fac.id_factura,fac.total".
+          " ,IF(cod.id_tipo_comp=3, 0 , fac.total) AS debe,".
+          " IF(cod.id_tipo_comp=3 , fac.total ,0 ) AS haber,fac.fecha as fe_orden".
+      " FROM facturas fac".
+      " INNER JOIN cod_afip cod on fac.cod_afip = cod.cod_afip".
+      " WHERE fac.id_cliente=? and fecha between ? and ? ".
+      " ORDER BY fe_orden,tt";
+      
+      $retorno=$this->db->query($sql, array($id_prov,$f1,$f2,$id_prov,$f1,$f2))->result();
+      return $retorno;
+  } 
+    
 }
 ?>

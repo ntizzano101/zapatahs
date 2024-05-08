@@ -140,5 +140,23 @@ class Funciones {
 		$rv = $resultado == $verificador;
 		return $rv;
 	} 
-		       
+	public function exportar_excel( $nombreArchivo)	{
+	  // Configurar las cabeceras para la descarga
+	  header('Content-Description: File Transfer');
+	  header('Content-Type: application/xls');
+	  header('Content-Disposition: attachment; filename="' . $nombreArchivo . '"');
+	  header('Expires: 0');
+	  header('Cache-Control: must-revalidate');
+	  header('Pragma: public');
+	  header('Content-Length: ' . filesize( $nombreArchivo ));
+	  
+	  // Limpiar el búfer de salida
+	  ob_clean();
+	  flush();
+	  
+	  // Leer el archivo y enviarlo al navegador
+	  readfile( $nombreArchivo );
+	  exit;
+	  ///
+	}	       
 }

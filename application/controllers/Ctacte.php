@@ -398,7 +398,25 @@ public function ingreso_pago_otro(){
         exit(json_encode($send, JSON_FORCE_OBJECT));
     
     }
-
+    public function exportar($id,$f3){
+        //f3 formato de archivo
+        $this->load->library('funciones');
+        $this->load->model('ctacte_model');        
+        $data=$this->ctacte_model->listado($id);
+        $c="";
+        foreach($data as $d){
+            if($f3==1){
+                $c.=$d->fecha . ","  . $d->descrip . ","  . $d->debe . ","  . $d->haber . "\r\n" ; 
+            }   
+            if($f3==2){         
+             $c.=$d->fecha . ";"  . $d->descrip . ";"  . str_replace(".",",",$d->debe) . ";"  . str_replace(".",",",$d->haber) . "\r\n" ;             
+            }
+        }
+        //$c="<table>".$c."</table>";
+        $a1="exportar/prov_". $id."fec".$f1.".csv";
+        file_put_contents($a1,$c);
+        $this->funciones->exportar_excel($a1);
+    }
 }
  
 ?>

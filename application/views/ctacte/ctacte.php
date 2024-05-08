@@ -19,6 +19,8 @@
                 <?php }?>
                 <div class="panel-body">
                     <a class="btn btn-primary" href="<?php echo base_url(); ?>ctacte/opago/<?=$proveedor->id?>">Nueva orden de pago</a>
+                    <a href="<?php echo base_url(); ?>/ctacte/exportar/<?=$proveedor->id?>/1" target="blank_" class="btn btn-default">Excel(.)</a>			
+                    <a href="<?php echo base_url(); ?>/ctacte/exportar/<?=$proveedor->id?>/2" target="blank_" class="btn btn-default">Excel(,)</a>			
                     <br>
                 </div>
                 
