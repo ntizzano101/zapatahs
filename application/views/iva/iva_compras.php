@@ -14,6 +14,8 @@
                 <button type="submit" class="btn btn-primary">Filtrar</button>	
                 <a href="<?php echo base_url(); ?>/iva/siap_compras/1/<?=$periodo?>" target="blank_" class="btn btn-primary">Exportar Comp.</a>	
                 <a href="<?php echo base_url(); ?>/iva/siap_compras/2/<?=$periodo?>" target="blank_" class="btn btn-primary">Exportar Ali</a>	               
+                <a href="<?php echo base_url(); ?>/iva/exportar_compras/1/<?=$periodo?>" target="blank_" class="btn btn-default">Excel(.)</a>			
+                <a href="<?php echo base_url(); ?>/iva/exportar_compras/2/<?=$periodo?>" target="blank_" class="btn btn-default">Excel(,)</a>			
                 </form>
                 <table class="table">
                   <thead>

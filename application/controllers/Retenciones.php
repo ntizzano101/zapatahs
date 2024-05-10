@@ -50,7 +50,25 @@ class Retenciones extends CI_Controller {
         
     }
     
-      
+    public function exportar($sep,$fd,$fh,$itpo){
+        //f3 formato de archivo
+        $this->load->library('funciones');
+        $this->load->model('retenciones_model');        
+        $data=$this->retenciones_model->listado($itpo,$fd,$fh);
+        $c="";
+        foreach($data as $d){
+            if($sep==1){
+                $c.=$d->rete_fecha . ","  . $d->nro_comprobante . ","  . $d->monto . ","  . $d->cliente . ","  . $d->cuit . PHP_EOL ; 
+            }   
+            if($sep==2){         
+                $c.=$d->rete_fecha . ";"  . $d->nro_comprobante . ";"  . str_replace(".",",",$d->monto) . ";"  . $d->cliente . ";"  . $d->cuit . PHP_EOL ; 
+            }
+        }
+
+        $a1="exportar/retenciones_". $tipo."_".$fd.".csv";
+        file_put_contents($a1,$c);
+        $this->funciones->exportar_excel($a1);
+    }   
     
 }    
 

@@ -21,11 +21,12 @@
                 ];             
                 echo form_dropdown('tipo', $options, $tipo,'class="form-control"');
                 ?>
-
                 Fecha Desde<input type="date" class="form-control" name="fdesde" value="<?=$fdesde?>">
                 Fecha Hasta<input type="date" class="form-control" name="fhasta" value="<?=$fhasta?>">
-
                 <button type="submit" class="btn btn-primary">Filtrar</button>	
+                <a href="<?php echo base_url(); ?>/retenciones/exportar/1/<?=$fdesde?>/<?=$fhasta?>/<?=$tipo?>" target="blank_" class="btn btn-default">Excel(.)</a>			
+                <a href="<?php echo base_url(); ?>/retenciones/exportar/2/<?=$fdesde?>/<?=$fhasta?>/<?=$tipo?>" target="blank_" class="btn btn-default">Excel(,)</a>			
+                
                 </form>
                 <table class="table">
                   <thead>

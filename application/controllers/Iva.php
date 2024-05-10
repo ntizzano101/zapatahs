@@ -400,7 +400,101 @@ class Iva extends CI_Controller {
             ///
 
     }
+    public function exportar_compras($p1,$p2){
+        $this->load->model('iva_model');    
+        $this->load->library('funciones');    
+        $periodo=$p2;
+        $f3=$p1;
+        $empresa=1;
+        $data=$this->iva_model->compras($periodo,$empresa);
+        $c="";
+        $sep=",";if($f3==2){$sep=";";}        
+        $primer="fecha,proveedor,cuit,factura,neto,iva,exento,no grabado,iibb,total";
+        if($sep==";"){$primer=str_replace(",",";",$primer);}                
+        foreach($data as $cta){
+            $mul=1;if($cta->tipo_comp==3){$mul=-1;}
+            $c.=$cta->fechaf.$sep;
+            $c.=$cta->proveedor.$sep; 
+            $c.=$cta->cuit.$sep; 
+            $c.=$cta->nombre  . " " .  str_pad($cta->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($cta->numero,8,"0",STR_PAD_LEFT) .$sep;
+            
+            $cta->neto=$cta->neto*$mul;
+            if($sep==";"){$cta->neto=str_replace(".",",",$cta->neto);}
+            $c.=$cta->neto.$sep;
 
-    
+            $cta->iva=$cta->iva*$mul;
+            if($sep==";"){$cta->iva=str_replace(".",",",$cta->iva);}
+            $c.=$cta->iva.$sep;
+
+            $cta->excento=$cta->excento*$mul;
+            if($sep==";"){$cta->excento=str_replace(".",",",$cta->excento);}
+            $c.=$cta->excento.$sep;
+
+            $cta->con_nograv=$cta->con_nograv*$mul;
+            if($sep==";"){$cta->con_nograv=str_replace(".",",",$cta->con_nograv);}
+            $c.=$cta->con_nograv*$mul.$sep;
+
+            $cta->per_ing_bto=$cta->per_ing_bto*$mul;
+            if($sep==";"){$cta->per_ing_bto=str_replace(".",",",$cta->per_ing_bto);}
+            $c.=$cta->per_ing_bto.$sep;
+
+            $cta->total=$cta->total*$mul;
+            if($sep==";"){$cta->total=str_replace(".",",",$cta->total);}
+            $c.=$cta->total.PHP_EOL;
+        }       
+        $c=$primer.PHP_EOL.$c;
+        $a1="exportar/compras_". $periodo.".csv";
+        file_put_contents($a1,$c);
+        $this->funciones->exportar_excel($a1);
+
+    }
+
+    public function exportar_ventas($p1,$p2){
+        $this->load->model('iva_model');    
+        $this->load->library('funciones');    
+        $periodo=$p2;
+        $f3=$p1;
+        $empresa=1;
+        $data=$this->iva_model->ventas($periodo,$empresa);
+        $c="";
+        $sep=",";if($f3==2){$sep=";";}        
+        $primer="fecha,cliente,cuit,factura,neto,iva,exento,no gravado,total";
+        if($sep==";"){$primer=str_replace(",",";",$primer);}                
+        foreach($data as $cta){
+            $mul=1;if($cta->tipo_comp==3){$mul=-1;}
+            $c.=$cta->fechaf.$sep;
+            $c.=$cta->cliente.$sep; 
+            $c.=$cta->cuit.$sep; 
+            $c.=$cta->nombre  . " " .  str_pad($cta->puerto,5,"0",STR_PAD_LEFT)."-".  str_pad($cta->numero,8,"0",STR_PAD_LEFT) .$sep;            
+            
+            $cta->neto=$cta->neto*$mul;
+            if($sep==";"){$cta->neto=str_replace(".",",",$cta->neto);}
+            $c.=$cta->neto.$sep;
+
+            $cta->iva=$cta->iva*$mul;
+            if($sep==";"){$cta->iva=str_replace(".",",",$cta->iva);}
+            $c.=$cta->iva.$sep;
+
+            $cta->excento=$cta->excento*$mul;
+            if($sep==";"){$cta->excento=str_replace(".",",",$cta->excento);}
+            $c.=$cta->excento.$sep;
+
+            $cta->con_nograv=$cta->con_nograv*$mul;
+            if($sep==";"){$cta->con_nograv=str_replace(".",",",$cta->con_nograv);}
+            $c.=$cta->con_nograv*$mul.$sep;            
+
+            $cta->total=$cta->total*$mul;
+            if($sep==";"){$cta->total=str_replace(".",",",$cta->total);}
+            $c.=$cta->total.PHP_EOL;
+        }       
+        $c=$primer.PHP_EOL.$c;
+        $a1="exportar/ventas_". $periodo.".csv";
+        file_put_contents($a1,$c);
+        $this->funciones->exportar_excel($a1);
+
+    }
+
+
+
 }  
 ?>

@@ -12,6 +12,8 @@
                 <form class="navbar-form navbar-left" role="search" method="POST" action="<?php echo base_url(); ?>iva/ventas">                           
                 <input type="text" class="form-control" name="periodo" value="<?=$periodo?>" id="buscar" placeholder="aaaamm">
                 <button type="submit" class="btn btn-primary">Filtrar</button>	
+                <a href="<?php echo base_url(); ?>/iva/exportar_ventas/1/<?=$periodo?>" target="blank_" class="btn btn-default">Excel(.)</a>			
+                <a href="<?php echo base_url(); ?>/iva/exportar_ventas/2/<?=$periodo?>" target="blank_" class="btn btn-default">Excel(,)</a>			
                 </form>
                 <table class="table">
                   <thead>
