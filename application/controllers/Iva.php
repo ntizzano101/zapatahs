@@ -432,7 +432,7 @@ class Iva extends CI_Controller {
 
             $cta->con_nograv=$cta->con_nograv*$mul;
             if($sep==";"){$cta->con_nograv=str_replace(".",",",$cta->con_nograv);}
-            $c.=$cta->con_nograv*$mul.$sep;
+            $c.=$cta->con_nograv.$sep;
 
             $cta->per_ing_bto=$cta->per_ing_bto*$mul;
             if($sep==";"){$cta->per_ing_bto=str_replace(".",",",$cta->per_ing_bto);}
