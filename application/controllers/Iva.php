@@ -249,7 +249,7 @@ class Iva extends CI_Controller {
             //lo vamos a calcular por las dudas 
             $ttotal=$com->con_nograv+$com->excento+$com->per_iva+$com->per_ganancia+$com->per_ing_bto;
             $ttotal+=$com->iva21+$com->iva27+$com->iva105;
-            $ttotal+=$com->neto0+$com->neto27+$com->neto105+$com->neto0;
+            $ttotal+=$com->neto0+$com->neto27+$com->neto105+$com->neto21;
             $c.=str_pad($ttotal*100,15,"0",STR_PAD_LEFT);
             //nogra
             $c.=str_pad($com->con_nograv*100,15,"0",STR_PAD_LEFT);
