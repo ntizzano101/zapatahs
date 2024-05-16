@@ -137,7 +137,7 @@ class Ajax extends CI_Controller {
             }
             if(is_numeric($fl["iva"])){     
                 $intImpNeto+=$fl["cant"]*$fl["prcu"];
-                $intIva+=$fl["cant"]*$fl["iva"]*$fl["prcu"];
+                $intIva+=round($fl["cant"]*$fl["iva"]*$fl["prcu"],2);
                 }
         }
         
@@ -182,7 +182,7 @@ class Ajax extends CI_Controller {
                     }
                     if(is_numeric($fl["iva"])){     
                         $intImpNeto+=$fl["cant"]*$fl["prcu"];
-                        $intIva+=$fl["cant"]*$fl["iva"]*$fl["prcu"];
+                        $intIva+=round($fl["cant"]*$fl["iva"]*$fl["prcu"],2);
                         }
                         array_push($aux, $fl);    
                 }
@@ -394,13 +394,13 @@ public function periva() {
     $rows="";
     foreach($mtzItems as $it){
         if(is_numeric($it["iva"])){
-            $neto=$it["cant"]*$it["prcu"];
-            $iva=$it["cant"]*$it["prcu"]*$it["iva"];
+            $neto=round($it["cant"]*$it["prcu"],2);
+            $iva=round($it["cant"]*$it["prcu"]*$it["iva"],2);
             $texto=$it["txiva"];
         $rows.="<tr>                
-                <td>$texto</td>
-                <td>$neto</td>
-                <td>$iva</td>
+                <td>".$texto."</td>
+                <td>".$neto."</td>
+                <td>".round($iva,2)."</td>
             </tr>";
         }
      }

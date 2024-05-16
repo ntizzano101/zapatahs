@@ -246,7 +246,11 @@ class Iva extends CI_Controller {
             // Nombre
             $c.=str_pad(substr($com->proveedor,0,30),30," ",STR_PAD_RIGHT);
             //total
-            $c.=str_pad($com->total*100,15,"0",STR_PAD_LEFT);
+            //lo vamos a calcular por las dudas 
+            $ttotal=$com->con_nograv+$com->excento+$com->per_iva+$com->per_ganancia+$com->per_ing_bto;
+            $ttotal+=$com->iva21+$com->iva27+$com->iva105;
+            $ttotal+=$com->neto+$com->neto27+$com->neto105+$com->neto0;
+            $c.=str_pad($ttotal*100,15,"0",STR_PAD_LEFT);
             //nogra
             $c.=str_pad($com->con_nograv*100,15,"0",STR_PAD_LEFT);
             //exento            
@@ -275,7 +279,7 @@ class Iva extends CI_Controller {
             //Cod OPeracion
             $c.=" ";
             //credito fiscal comptable 
-            $c.=str_pad($com->iva*100,15,"0",STR_PAD_LEFT);
+            $c.=str_pad(($com->iva21+$com->iva27+$com->iva105)*100,15,"0",STR_PAD_LEFT);
             //Otrostributos
             $c.=str_repeat("0",15);
             //cuit corredr
