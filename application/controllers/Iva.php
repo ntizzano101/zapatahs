@@ -222,13 +222,7 @@ class Iva extends CI_Controller {
         $compro=$this->iva_model->siap_compras($piva);
         $c="";$x="";
         foreach($compro as $com){
-            $com->cuit=str_replace("-","",$com->cuit);
-            //loc Comp C entonces va exento no  nograba
-            if(in_array($com->codigo_comp,array(11,12,13))){
-                   $com->excento=0;
-                   //$com->excento+$com->con_nograv;
-                   $com->con_nograv=0; 
-            }
+            $com->cuit=str_replace("-","",$com->cuit);         
             //Fecha Comp
             $c.=$com->f2;
             //tipo Comp
@@ -247,9 +241,18 @@ class Iva extends CI_Controller {
             $c.=str_pad(substr($com->proveedor,0,30),30," ",STR_PAD_RIGHT);
             //total
             //lo vamos a calcular por las dudas 
+            //loc Comp C  NO VA NADA SOLO VA TOTAL entonces va exento no  nograba
+               if(in_array($com->codigo_comp,array(11,12,13))){
+                $com->excento=0;
+                //$com->excento+$com->con_nograv;
+                $com->con_nograv=0; 
+                $ttotal=$com->total;
+            }
+            else{
             $ttotal=$com->con_nograv+$com->excento+$com->per_iva+$com->per_ganancia+$com->per_ing_bto;
             $ttotal+=$com->iva21+$com->iva27+$com->iva105;
             $ttotal+=$com->neto0+$com->neto27+$com->neto105+$com->neto21;
+            }
             $c.=str_pad($ttotal*100,15,"0",STR_PAD_LEFT);
             //nogra
             $c.=str_pad($com->con_nograv*100,15,"0",STR_PAD_LEFT);
