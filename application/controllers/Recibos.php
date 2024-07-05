@@ -316,7 +316,7 @@ public function ingreso_pago_otro(){
             $pago->facturas[]=$factura;
         }               
         //controlo que el total cancelando coincida
-        if($tpagado!=$total_fin){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos" . $total_fin;}
+        if(round($tpagado,2)!=round($total_fin,2)){$data->rta="El Total cancelado ".$tpagado." debe coincidir con los Pagos " . $total_fin;}
         if($opagofecha==""){$data->rta="La Fecha de la OP no puede ser vacia";}                          
         if($data->rta==""){                      
             $opago = new stdClass();   
