@@ -453,6 +453,7 @@ class Iva extends CI_Controller {
         }       
         $c=$primer.PHP_EOL.$c;
         $a1="exportar/compras_". $periodo.".csv";
+        @unlink($a1);
         file_put_contents($a1,$c);
         $this->funciones->exportar_excel($a1);
 
@@ -498,6 +499,7 @@ class Iva extends CI_Controller {
         }       
         $c=$primer.PHP_EOL.$c;
         $a1="exportar/ventas_". $periodo.".csv";
+        @unlink($a1);
         file_put_contents($a1,$c);
         $this->funciones->exportar_excel($a1);
 
