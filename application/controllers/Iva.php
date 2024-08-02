@@ -378,7 +378,9 @@ class Iva extends CI_Controller {
         }  
             ////FIN IVA COMPRAS 
             $rutaArchivo1 = "compras/Compras_".$piva.".txt";
-            $rutaArchivo2 = "compras/Compras_Ali_".$piva.".txt";           
+            $rutaArchivo2 = "compras/Compras_Ali_".$piva.".txt"; 
+            @unlink($rutaArchivo1);
+            @unlink($rutaArchivo2);          
             file_put_contents($rutaArchivo1,$c);           
             file_put_contents($rutaArchivo2,$x);                       
             $defi=$rutaArchivo2;
