@@ -212,11 +212,15 @@ font-size:small;
 							$qr1["codAut"]=(float)$venta->cae;
 							$valor=json_encode($qr1);
 							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);
+							
+							/*<img src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=<?=$valor?>">**/
+
+							include "/var/www/html/facturaelectronica/phpqrcode/qrlib.php";
+							QRcode::png($valor,base_dir().'/img/qr'.$venta['id'].'.png', 'L', 4, 2);
 							?>
-							<img src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=<?=$valor?>">
 						</td>
 						<td>
-							<img src="/ln/img/afip.png"><br>
+							<img src="/ln/img/arca.png"><br>
 							CAE Nro: <?php echo $venta->cae ?>
 							Fecha.Vto.Cae: <?php echo fechaDBtoHtml($venta->cae_vence) ?>
 						</td>						
