@@ -217,12 +217,8 @@ font-size:small;
 							
 							?>
 							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta["id_factura"]?>.png">
-
-							//$this->library('phpqrcode/qrlib');
-							include_once("/var/www/html/zapatahs/application/libraries/phpqrcode/qrlib.php");
-							QRcode->png($valor,'zapatahs/img/qr'.$venta['id_factura'].'.png', 'L', 4, 2);
-
-							?>
+							
+							
 						</td>
 						<td>
 							<img src="/zapatahs/img/arca.png"><br>
