@@ -214,8 +214,8 @@ font-size:small;
 							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);							
 							$f=@fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=".$valor."&nombre=zap".$venta->id_factura,$r);													
 							?>							
-							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta->id_factura?>.png" width="40" 
-							height="40">				
+							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta->id_factura?>.png" width="200" 
+							height="200">				
 						</td>
 						<td>
 							<img src="/zapatahs/img/arca.png"><br>
