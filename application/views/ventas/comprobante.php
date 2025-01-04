@@ -213,11 +213,15 @@ font-size:small;
 							$valor=json_encode($qr1);
 							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);
 							
-							/*<img src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=<?=$valor?>">**/
+							$f=fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=<?=$valor?>&nombre=zap".$venta['id_factura'],$r);
+							
+							?>
+							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta["id_factura"]?>.png">
 
 							//$this->library('phpqrcode/qrlib');
 							include_once("/var/www/html/zapatahs/application/libraries/phpqrcode/qrlib.php");
 							QRcode->png($valor,'zapatahs/img/qr'.$venta['id_factura'].'.png', 'L', 4, 2);
+
 							?>
 						</td>
 						<td>
