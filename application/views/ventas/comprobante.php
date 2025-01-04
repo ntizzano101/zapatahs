@@ -216,11 +216,11 @@ font-size:small;
 							/*<img src="https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=<?=$valor?>">**/
 
 							include "/var/www/html/facturaelectronica/phpqrcode/qrlib.php";
-							QRcode::png($valor,base_dir().'/img/qr'.$venta['id'].'.png', 'L', 4, 2);
+							QRcode::png($valor,'zapatahs/img/qr'.$venta['id'].'.png', 'L', 4, 2);
 							?>
 						</td>
 						<td>
-							<img src="/ln/img/arca.png"><br>
+							<img src="/zapatahs/img/arca.png"><br>
 							CAE Nro: <?php echo $venta->cae ?>
 							Fecha.Vto.Cae: <?php echo fechaDBtoHtml($venta->cae_vence) ?>
 						</td>						
