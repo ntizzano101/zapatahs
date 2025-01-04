@@ -217,7 +217,7 @@ font-size:small;
 
 							//$this->library('phpqrcode/qrlib');
 							include_once("/var/www/html/zapatahs/application/libraries/phpqrcode/qrlib.php");
-							QRcode::png($valor,'zapatahs/img/qr'.$venta['id_factura'].'.png', 'L', 4, 2);
+							QRcode->png($valor,'zapatahs/img/qr'.$venta['id_factura'].'.png', 'L', 4, 2);
 							?>
 						</td>
 						<td>
