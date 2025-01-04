@@ -211,14 +211,10 @@ font-size:small;
 							//codAut 	Numérico 14 dígitos 	OBLIGATORIO – Código de autorización otorgado por AFIP para el comprobante 	70417054367476
 							$qr1["codAut"]=(float)$venta->cae;
 							$valor=json_encode($qr1);
-							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);
-							
-							$f=fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=".$valor."&nombre=zap".$venta["id_factura"],$r);
-							
-							?>
-							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta["id_factura"]?>.png">
-							
-							
+							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);							
+							$f=fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=".$valor."&nombre=zap".$venta["id_factura"],$r);													
+							?>							
+							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta["id_factura"]?>.png">				
 						</td>
 						<td>
 							<img src="/zapatahs/img/arca.png"><br>
