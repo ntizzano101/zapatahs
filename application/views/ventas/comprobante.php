@@ -158,6 +158,13 @@ font-size:small;
 			
 			<td width="20%" align="right"><b><?php echo $venta->total ?></b></td>
 	</tr>
+			<?php if($venta->letra=='B'){ ?>
+	<tr>
+		<td colspan="3"><span class="texto">Regimen de transparencia fiscal al consumidor. Ley 27.743
+			,IVA Contenido :<?php echo $venta->iva21 + $venta->iva105 ?>
+		</span></td>
+	</tr>				
+		<?php	}?>
 	<?php } else { ?>
 		<tr>			
 			
