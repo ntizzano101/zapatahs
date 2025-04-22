@@ -148,7 +148,7 @@ font-size:small;
 			<td width="20%" align="right"><b><?php echo $venta->iva105 ?></b></td>
 		</tr>		
 		<tr>
-			<td width="80%" colspan="2" align="right">IVA 21%</td>			
+			<td width="80%" colspan="2" align="right">IVA 21%</td>		
 			<td width="20%" align="right"><b><?php echo $venta->iva21 ?></b></td>
 		</tr>		
 	<?php }  
