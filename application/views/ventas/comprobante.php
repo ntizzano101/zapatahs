@@ -221,7 +221,14 @@ font-size:small;
 							$qr1["codAut"]=(float)$venta->cae;
 							$valor=json_encode($qr1);
 							$valor="https://www.afip.gob.ar/fe/qr/?p=" . base64_encode($valor);							
-							$f=@fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=".$valor."&nombre=zap".$venta->id_factura,$r);													
+							if(ENVIRONMENT === 'development'){
+							   $f=@fopen("https://www.facilsassn.com/facturaelectronica/phpqrcode/uso.php?valor=".$valor."&nombre=zap".$venta->id_factura,$r);													
+							}
+							else{
+									$nombre="zap".$venta->id_factura;
+									include_once("/var/www/html/facturaelectronica/phpqrcode/qrlib.php");
+									QRcode::png($valor,'/var/www/html/facturaelectronica/qrs/'.$nombre.'.png', 'L', 4, 2);	
+							}
 							?>							
 							<img src="https://www.facilsassn.com/facturaelectronica/qrs/zap<?=$venta->id_factura?>.png" width="200" 
 							height="200">				
