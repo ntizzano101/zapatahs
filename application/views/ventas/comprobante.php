@@ -173,7 +173,9 @@ font-size:small;
 		</td>
 		</tr>	
 	<?php } ?>	
-	<?php if(in_array($venta->letra,array("A","B")) and is_numeric($venta->cae)) { ?>
+	<?php 
+	/*recortamos el valor del cae pero da muy largo y no lo toma como numerico*/
+	if(in_array($venta->letra,array("A","B")) and is_numeric(substr($venta->cae,1,6))) { ?>
 	<tr>
 			<td width="100%" colspan="10" align="center">
 				<table width="100%" align="center">
