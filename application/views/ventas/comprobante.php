@@ -174,10 +174,7 @@ font-size:small;
 		</tr>	
 	<?php } ?>	
 	<?php 
-	/*recortamos el valor del cae pero da muy largo y no lo toma como numerico*/
-	echo "CAE". substr($venta->cae,1,6);
-	if(is_numeric(substr($venta->cae,1,6))){echo "OKK";}
-	else{echo "NOO";}	
+	/*recortamos el valor del cae pero da muy largo y no lo toma como numerico*/	
 	if(in_array($venta->letra,array("A","B")) and is_numeric(substr($venta->cae,1,6))) { ?>
 	<tr>
 			<td width="100%" colspan="10" align="center">
